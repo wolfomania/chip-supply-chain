@@ -22,20 +22,34 @@ import './SankeyView.css';
  * drawn between two pinned columns either, so they are dropped from the ribbons;
  * both omissions are called out in the footnote.
  *
+ * LABELS. Every name sits in the lane to the right of its node — including the
+ * last column's, which is why MARGIN.right is a full label gutter rather than a
+ * trim. One consistent side means one de-collision lane per column and no way
+ * for two columns' names to meet in the middle. Names are wrapped to whatever
+ * the lane can actually hold, pushed apart vertically inside the lane, and any
+ * name that ends up more than a few pixels off its node gets a leader line
+ * back to it.
+ *
  * Layout is computed with d3-sankey; every element is rendered by React.
  */
 
 /* Geometry ------------------------------------------------------------------ */
 
 const MIN_WIDTH = 1280;
-const NODE_W = 14;
-const NODE_PAD = 14;
-const MARGIN = { top: 68, right: 30, bottom: 18, left: 4 };
-const LABEL_GAP = 8;
+const NODE_W = 13;
+/* Vertical air between stacked nodes. Generous on purpose: the padding is what
+   a displaced label falls into, so it buys label room as well as node room. */
+const NODE_PAD = 22;
+/* `right` is a real gutter, not a trim: every label sits to the *right* of its
+   node, including the last column's, so the last column needs a lane too. */
+const MARGIN = { top: 74, right: 172, bottom: 26, left: 4 };
+const LABEL_GAP = 9;
 const LABEL_SIZE = 11.5;
-const LABEL_LEAD = 12.5;
+const LABEL_LEAD = 13;
 const CHAR_W = LABEL_SIZE * 0.55;
 const HEADER_CHAR_W = 7;
+/** Vertical displacement past which a label gets a leader line back to its node. */
+const LEADER_MIN = 5;
 
 /** Flow tiers in canonical order — one diagram column each. */
 const COLUMN_TIERS: Tier[] = [...FLOW_TIERS].sort((a, b) => tierIndex(a) - tierIndex(b));
@@ -147,6 +161,10 @@ interface RenderNode {
   labelX: number;
   labelY: number;
   labelAnchor: 'start' | 'end';
+  /** Vertical centre of the node itself — where the label wanted to be. */
+  anchorY: number;
+  /** Path from node to label, non-empty only once the label has been displaced. */
+  leader: string;
   degree: number;
 }
 
@@ -197,7 +215,12 @@ interface Layout {
   sameTierCount: number;
 }
 
-/** Nudge overlapping labels apart inside each vertical lane. */
+/**
+ * Push labels apart inside each column's lane, then draw a leader line for any
+ * that had to move. Two sweeps: downward to open every gap, upward to pull the
+ * stack back off the floor. The gap between neighbours is half of each one's
+ * height plus a fixed breath, so a two-line name claims the room it needs.
+ */
 function deCollide(nodes: RenderNode[], top: number, bottom: number): void {
   const lanes = new Map<string, RenderNode[]>();
   for (const node of nodes) {
@@ -209,7 +232,7 @@ function deCollide(nodes: RenderNode[], top: number, bottom: number): void {
   for (const lane of lanes.values()) {
     lane.sort((a, b) => a.labelY - b.labelY);
     const gapAfter = (i: number) =>
-      ((lane[i].label.length + lane[i + 1].label.length) / 2) * LABEL_LEAD + 3;
+      ((lane[i].label.length + lane[i + 1].label.length) / 2) * LABEL_LEAD + 5;
     for (let i = 1; i < lane.length; i += 1) {
       const min = lane[i - 1].labelY + gapAfter(i - 1);
       if (lane[i].labelY < min) lane[i].labelY = min;
@@ -221,6 +244,16 @@ function deCollide(nodes: RenderNode[], top: number, bottom: number): void {
       if (lane[i].labelY > max) lane[i].labelY = max;
     }
     if (lane[0] && lane[0].labelY < top) lane[0].labelY = top;
+  }
+
+  for (const node of nodes) {
+    const drop = node.labelY - node.anchorY;
+    if (Math.abs(drop) < LEADER_MIN) continue;
+    // Stub out of the node, diagonal across the gap, stub into the name.
+    const from = node.x1 + 1;
+    const elbow = node.x1 + 5;
+    const to = node.labelX - 3;
+    node.leader = `M${from},${node.anchorY}H${elbow}L${to - 4},${node.labelY}H${to}`;
   }
 }
 
@@ -249,8 +282,10 @@ function buildLayout(
   const plotTop = MARGIN.top;
   const plotBottom = MARGIN.top + plotHeight;
   const kx = (plotRight - plotLeft - NODE_W) / (COLUMN_TIERS.length - 1);
-  const laneChars = Math.max(14, Math.floor((kx - NODE_W - LABEL_GAP - 6) / CHAR_W));
-  const wrapAt = Math.max(20, Math.min(32, laneChars));
+  // Wrap to what the lane can actually hold. Every lane is the same width now
+  // (the right margin is one too), so one number covers the whole diagram.
+  const laneWidth = kx - NODE_W - LABEL_GAP - 4;
+  const wrapAt = Math.max(13, Math.min(30, Math.floor(laneWidth / CHAR_W)));
 
   const nodeData: NodeDatum[] = flowCompanies.map((company) => ({
     id: company.id,
@@ -307,7 +342,9 @@ function buildLayout(
     .nodeAlign((d) => d.column)
     .nodeWidth(NODE_W)
     .nodePadding(NODE_PAD)
-    .iterations(32)
+    // Ribbon crossings are the other half of the legibility problem; the extra
+    // relaxation passes are cheap at this graph size and visibly untangle them.
+    .iterations(96)
     .extent([
       [plotLeft, plotTop],
       [plotRight, plotBottom],
@@ -369,7 +406,6 @@ function buildLayout(
     });
   }
 
-  const lastColumn = COLUMN_TIERS.length - 1;
   const nodes: RenderNode[] = [];
   for (const node of graph.nodes) {
     if (node.spine) continue;
@@ -377,7 +413,6 @@ function buildLayout(
     const x1 = node.x1 as number;
     const y0 = node.y0 as number;
     const y1 = node.y1 as number;
-    const anchor: 'start' | 'end' = node.column === lastColumn ? 'end' : 'start';
     nodes.push({
       id: node.id,
       name: node.name,
@@ -389,9 +424,11 @@ function buildLayout(
       y0,
       y1,
       label: node.label,
-      labelX: anchor === 'start' ? x1 + LABEL_GAP : x0 - LABEL_GAP,
+      labelX: x1 + LABEL_GAP,
       labelY: (y0 + y1) / 2,
-      labelAnchor: anchor,
+      labelAnchor: 'start',
+      anchorY: (y0 + y1) / 2,
+      leader: '',
       degree: (upstream.get(node.id)?.length ?? 0) + (downstream.get(node.id)?.length ?? 0),
     });
   }
@@ -405,15 +442,14 @@ function buildLayout(
   const headers: ColumnHeader[] = COLUMN_TIERS.map((tier, i) => {
     const anchorNode = columnAnchors.get(i);
     const x0 = anchorNode ? (anchorNode.x0 as number) : plotLeft + i * kx;
-    const x1 = x0 + NODE_W;
-    const anchor: 'start' | 'end' = i === lastColumn ? 'end' : 'start';
+    // Headers sit on the same left edge as their column's labels, last one
+    // included — the right margin is a lane, so nothing has to hang backwards.
     return {
       tier,
       index: i + 1,
-      x: anchor === 'start' ? x0 : x1,
-      ruleEnd:
-        anchor === 'start' ? x0 + Math.min(kx - 12, 148) : x1 - Math.min(kx - 12, 148),
-      anchor,
+      x: x0,
+      ruleEnd: x0 + Math.min(kx - 12, 152),
+      anchor: 'start',
       lines: wrapText(TIER_LABEL[tier], headerChars, 2),
       count: counts.get(tier) ?? 0,
     };
@@ -479,14 +515,17 @@ export function SankeyView({ companies, edges, selectedId, onSelectCompany }: Vi
   const scrollRef = useRef<HTMLDivElement>(null);
   const [available, setAvailable] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const [plotHeight, setPlotHeight] = useState(760);
+  const [plotHeight, setPlotHeight] = useState(880);
   const [hover, setHover] = useState<Hover>(null);
   const [tip, setTip] = useState<Tip | null>(null);
 
   useLayoutEffect(() => {
     const measure = () => {
       setPageWidth(document.documentElement.clientWidth);
-      setPlotHeight(Math.round(Math.max(700, Math.min(1080, window.innerHeight - 210))));
+      // A floor well above the viewport: the diagram is allowed to be taller
+      // than the window and let the page scroll, because the vertical room is
+      // what keeps 13 names in one column from stacking on top of each other.
+      setPlotHeight(Math.round(Math.max(880, Math.min(1240, window.innerHeight - 190))));
     };
     measure();
     window.addEventListener('resize', measure);
@@ -691,6 +730,18 @@ export function SankeyView({ companies, edges, selectedId, onSelectCompany }: Vi
                       <title>{`${node.name} — ${node.role}`}</title>
                     </rect>
                   ))}
+                </g>
+
+                <g className="sankey__leaders" fill="none">
+                  {layout.nodes.map((node) =>
+                    node.leader ? (
+                      <path
+                        key={node.id}
+                        className={`sankey__leader${stateOf(node.id, 'nodes')}`}
+                        d={node.leader}
+                      />
+                    ) : null,
+                  )}
                 </g>
 
                 <g className="sankey__labels">

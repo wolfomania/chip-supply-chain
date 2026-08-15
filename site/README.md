@@ -1,12 +1,11 @@
 # The Chip Supply Chain — site
 
-Vite + React + TypeScript. Static build, deployed to GitHub Pages at
-`https://wolfomania.github.io/chip-supply-chain/` (hence `base: '/chip-supply-chain/'`
-in `vite.config.ts`).
+Vite + React + TypeScript. Static build, deployed on Vercel at
+`https://chip-chain.vercel.app/`.
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173/chip-supply-chain/
+npm run dev      # http://localhost:5173/
 npm run build    # -> dist/
 npm run preview
 ```

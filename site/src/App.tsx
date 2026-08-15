@@ -15,6 +15,11 @@ const VIEWS = [
 
 type ViewId = (typeof VIEWS)[number]['id'];
 
+/** The video this site was built out of. Credited once, in the footer. */
+const VIDEO_URL = 'https://www.youtube.com/watch?v=Gj5liYnpTeM';
+const VIDEO_TITLE = 'The Insane Complexity of the Semiconductor Global Supply Chain';
+const VIDEO_CHANNEL = 'Micro';
+
 const DEFAULT_VIEW: ViewId = 'companies';
 
 function viewFromHash(): ViewId {
@@ -55,9 +60,6 @@ export default function App() {
             <p className="masthead__standfirst">
               Every advanced chip is the output of a few hundred companies, several of which have no real
               competitor. This is who they are, what they make, and where it comes from.
-            </p>
-            <p className="masthead__credit">
-              Inspired by the video <cite>&ldquo;The Insane Supply Chain Behind AI Chips&rdquo;</cite>
             </p>
           </div>
 
@@ -113,7 +115,11 @@ export default function App() {
             fetched from each company&rsquo;s own domain.
           </p>
           <p className="site-foot__note">
-            Inspired by the video &ldquo;The Insane Supply Chain Behind AI Chips&rdquo;.
+            Inspired by{' '}
+            <a href={VIDEO_URL} target="_blank" rel="noopener noreferrer">
+              <cite>{VIDEO_TITLE}</cite>
+            </a>{' '}
+            by {VIDEO_CHANNEL}.
           </p>
         </div>
       </footer>

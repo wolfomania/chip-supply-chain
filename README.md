@@ -5,7 +5,7 @@ quartz sand, photoresist and ultra-flat ceramic wafer chucks, through lithograph
 machines and fabs, to the memory makers, packaging houses and chip designers at
 the end of the line.
 
-**Live site: <https://wolfomania.github.io/chip-supply-chain/>**
+**Live site: <https://chip-chain.vercel.app/>**
 
 ## What's in it
 
@@ -40,14 +40,11 @@ Other scripts: `npm run build` (type-check + production build to `site/dist/`),
 | `site/src/data/companies/` | The company dataset the app loads at build time |
 | `data/` | Source research files + [`data/SCHEMA.md`](data/SCHEMA.md), the record shape |
 | `transcript.md` | Transcript of the video that inspired the project |
-| `.github/workflows/deploy.yml` | Builds `site/` and publishes to GitHub Pages on push to `main` |
 
 ## Deployment
 
-Pushing to `main` triggers the GitHub Actions workflow, which runs `npm ci &&
-npm run build` in `site/` and publishes `site/dist` to GitHub Pages. Vite's
-`base` is set to `/chip-supply-chain/` and the app uses hash routing, so the
-static build works under the project-pages subpath with no server config.
+The site is deployed on Vercel, which builds `site/` (`npm run build`) and
+serves `site/dist`.
 
 ## Data and sources
 

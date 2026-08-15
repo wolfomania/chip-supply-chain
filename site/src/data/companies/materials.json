@@ -52,7 +52,7 @@
     {
       "id": "ajinomoto",
       "name": "Ajinomoto Co., Inc.",
-      "tier": "materials",
+      "tier": "raw-materials",
       "role": "Ajinomoto Build-up Film (ABF), the insulating film inside almost every advanced chip package substrate",
       "description": "The company that introduced the world to MSG also holds a near-total monopoly on the insulating film beneath modern CPUs and GPUs. Launched in 1999 out of Ajinomoto's amino-acid and fine-chemistry expertise, ABF is an epoxy/hardener/silica composite that is a stable dielectric, can be patterned at very fine pitch, and takes copper plating unusually well - a combination nobody has credibly matched. Ajinomoto holds well over 95% of the interlayer-insulation market for high-end package substrates, and layer counts have climbed from four or five to well past a dozen on an AI accelerator. It is investing about Y25bn to lift ABF capacity roughly 50% by 2030 across its Kawasaki and Gunma sites, where margins on the film now exceed 50%.",
       "bottleneck": true,

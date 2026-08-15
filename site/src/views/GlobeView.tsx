@@ -1,10 +1,10 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { GlobeMethods } from 'react-globe.gl';
+import type { Material } from 'three';
 import type { Company, Tier } from '../data/types';
 import type { ViewProps } from './viewProps';
 import { TIER_COLOR, TIER_LABEL, TIER_ORDER } from '../data/tiers';
-import earthDayUrl from '../assets/earth-day.jpg';
-import earthTopologyUrl from '../assets/earth-topology.png';
+import countriesUrl from '../assets/countries-110m.geo.json?url';
 import './GlobeView.css';
 
 /**
@@ -15,9 +15,18 @@ import './GlobeView.css';
  * Everything WebGL-facing takes its colour from TIER_COLOR rather than the CSS
  * custom properties — a shader cannot read `var(--tier-fabs)`.
  *
+ * The base map is drawn, not photographed: no satellite imagery, no terrain.
+ * A flat-coloured sphere is the ocean and Natural Earth's 110m country
+ * polygons are laid on top as vector land with hairline borders — the same
+ * paper-and-ink register as the rest of the page, and nothing to pinch or
+ * blur at the poles. The tier-coloured arcs and points are the only saturated
+ * things on screen.
+ *
  * Layers, bottom to top:
- *   globe     earth-day.jpg + earth-topology.png bump, both bundled locally
- *             (GitHub Pages, no CDN at runtime)
+ *   globe     flat ocean-coloured sphere (no texture), soft atmosphere
+ *   polygons  177 country caps + hairline strokes, from the bundled GeoJSON
+ *             in src/assets (Natural Earth 110m via world-atlas, ~185 kB,
+ *             emitted as an asset and fetched from our own origin)
  *   arcs      one per supply edge, HQ → HQ, source-tier → target-tier gradient
  *   points    one bar per HQ (tall) and per facility (short)
  *   rings     pulse on the selected company's sites
@@ -28,6 +37,52 @@ const Globe = lazy(() => import('react-globe.gl'));
 /** Where the density is: Taiwan / Japan / Korea / coastal China. */
 const HOME_POV = { lat: 24, lng: 122, altitude: 2.1 } as const;
 const FOCUS_ALTITUDE = 1.5;
+
+/* ---- base map palette ----------------------------------------------------
+   Deliberately quiet and close in value: warm cream land on a cool, pale
+   ocean, with borders only a step darker than the land they divide. Read as
+   a printed reference map, so the tier colours on top stay the only accents.
+   These sit next to --paper #faf8f4 / --line #e4dfd5 from tokens.css but are
+   hardcoded — WebGL cannot resolve CSS custom properties.                  */
+
+const OCEAN = '#dde6ed'; /* pale desaturated blue-grey */
+const LAND = '#f3efe6'; /* warm light cream, a touch above the paper */
+const BORDER = 'rgba(140, 131, 116, 0.85)'; /* warm grey hairline */
+const LAND_EDGE = 'rgba(163, 154, 138, 0.5)'; /* the 0.004 lip around each cap */
+const ATMOSPHERE = '#a8c2dd';
+
+/** Land floats a hair above the sphere so the two never z-fight. */
+const LAND_ALTITUDE = 0.004;
+
+/**
+ * Antarctica ships as two features, tagged by `properties.role`.
+ *
+ * world-atlas clips the ice sheet at ~85.6°S, which would leave a hole at the
+ * pole, so the `fill` feature carries its boundary down the antimeridian to
+ * 90°S and closes along it — correct cap, but stroking it would draw a stray
+ * line from the Ross Sea to the pole. The `stroke` feature is the true coast
+ * traced out and back: zero area, so it contributes only the outline.
+ */
+const landColor = (obj: object) => ((obj as CountryFeature).properties.role === 'stroke' ? 'rgba(0,0,0,0)' : LAND);
+const landEdgeColor = (obj: object) => ((obj as CountryFeature).properties.role ? 'rgba(0,0,0,0)' : LAND_EDGE);
+const borderColor = (obj: object) => ((obj as CountryFeature).properties.role === 'fill' ? false : BORDER);
+
+/** Only the drawn layers answer the pointer; the base map is scenery. */
+const pointerEventsFilter = (obj: object) =>
+  (obj as { __globeObjType?: string }).__globeObjType !== 'polygon';
+
+/** One country from the bundled Natural Earth extract. */
+interface CountryFeature {
+  type: 'Feature';
+  properties: { name: string; role?: 'fill' | 'stroke' };
+  geometry: object;
+}
+
+/** The two async pieces of the base map, revealed together. */
+interface BaseMap {
+  material: Material;
+  countries: CountryFeature[];
+}
 
 type SiteKind = 'hq' | 'facility';
 
@@ -125,6 +180,33 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
   const [ready, setReady] = useState(false);
   const [interacted, setInteracted] = useState(false);
   const [hiddenTiers, setHiddenTiers] = useState<ReadonlySet<Tier>>(() => new Set<Tier>());
+  const [baseMap, setBaseMap] = useState<BaseMap | null>(null);
+
+  /* ---- base map ----------------------------------------------------------
+     The ocean is the globe's own material, so it has to be built from three —
+     imported dynamically to keep the WebGL stack out of the entry bundle, the
+     same way the Globe component is. The countries file is an emitted asset
+     fetched from our own origin, not a CDN. Both land together so the sphere
+     never flashes as a bare black ball before the map arrives.             */
+
+  useEffect(() => {
+    let alive = true;
+
+    const loadCountries = fetch(countriesUrl)
+      .then((res) => res.json() as Promise<{ features: CountryFeature[] }>)
+      .then((collection) => collection.features)
+      // A missing base map is a cosmetic loss, not a reason to withhold the data.
+      .catch(() => [] as CountryFeature[]);
+
+    void Promise.all([import('three'), loadCountries]).then(([three, countries]) => {
+      if (!alive) return;
+      setBaseMap({ material: new three.MeshLambertMaterial({ color: OCEAN }), countries });
+    });
+
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   /* ---- data -------------------------------------------------------------- */
 
@@ -217,16 +299,28 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
     controls.maxDistance = 700;
     controls.addEventListener('start', () => setInteracted(true));
 
-    // Flatten the lighting. globe.gl's default puts a directional light over
-    // the north pole, which leaves a hard terminator and a dim southern half —
-    // the "planet in space" look. A dominant ambient light plus a soft key
-    // renders the earth as an evenly lit object sitting on the page instead.
+    // Crisp over cheap: antialiasing is on by globe.gl's default, and the
+    // pixel ratio is pinned here rather than left to it — the vector base map
+    // lives or dies on clean 1px border strokes.
+    globe.renderer().setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+
+    // Light it like a diagram, not a planet. globe.gl's default puts a fixed
+    // directional light over the north pole, which leaves a hard terminator
+    // and a dim southern half. Here the key light rides the camera instead, so
+    // the falloff is always radial — brightest under the cursor, a touch
+    // deeper towards the limb — which reads as a sphere from every angle with
+    // no day/night line anywhere. Under three's physical lighting a Lambert
+    // surface reflects intensity/π; ambient 2.55 + key 0.62 puts the centre at
+    // ~1.0, i.e. the map colours come out as authored.
     // `three` already lives in this lazily-loaded chunk, so the import is free.
     void import('three').then(({ AmbientLight, DirectionalLight }) => {
       if (globeRef.current !== globe) return;
-      const key = new DirectionalLight(0xffffff, 1.1);
-      key.position.set(1, 0.5, 1.4);
-      globe.lights([new AmbientLight(0xffffff, 3.4), key]);
+      const camera = globe.camera();
+      const key = new DirectionalLight(0xffffff, 0.62);
+      const followCamera = () => key.position.copy(camera.position);
+      followCamera();
+      controls.addEventListener('change', followCamera);
+      globe.lights([new AmbientLight(0xffffff, 2.55), key]);
     });
 
     setReady(true);
@@ -303,7 +397,10 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
     (obj: object) => {
       const a = obj as SupplyArc;
       const touches = selectedId != null && (a.source === selectedId || a.target === selectedId);
-      const alpha = selectedId == null ? 0.42 : touches ? 0.9 : 0.08;
+      // A touch heavier than they were over the old satellite texture: the
+      // vector base map is pale, so a thin arc needs the extra opacity to
+      // hold its own where it crosses land.
+      const alpha = selectedId == null ? 0.52 : touches ? 0.92 : 0.09;
       return [rgba(TIER_COLOR[a.sourceTier], alpha), rgba(TIER_COLOR[a.targetTier], alpha)];
     },
     [selectedId],
@@ -386,19 +483,30 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
       </p>
 
       <div className="globe__stage" ref={stageRef}>
-        {size.width > 0 ? (
+        {size.width > 0 && baseMap ? (
           <Suspense fallback={<GlobeLoading />}>
             <Globe
               ref={globeRef}
               width={size.width}
               height={size.height}
               backgroundColor="rgba(0,0,0,0)"
-              globeImageUrl={earthDayUrl}
-              bumpImageUrl={earthTopologyUrl}
+              /* base map — flat ocean sphere, vector land on top */
+              globeImageUrl={null}
+              globeMaterial={baseMap.material}
+              globeCurvatureResolution={3}
               showAtmosphere
-              atmosphereColor="#a9c2dd"
-              atmosphereAltitude={0.17}
+              atmosphereColor={ATMOSPHERE}
+              atmosphereAltitude={0.18}
               onGlobeReady={handleReady}
+              pointerEventsFilter={pointerEventsFilter}
+              /* countries */
+              polygonsData={baseMap.countries}
+              polygonCapColor={landColor}
+              polygonSideColor={landEdgeColor}
+              polygonStrokeColor={borderColor}
+              polygonAltitude={LAND_ALTITUDE}
+              polygonCapCurvatureResolution={3}
+              polygonsTransitionDuration={0}
               /* points */
               pointsData={points}
               pointLat="lat"
