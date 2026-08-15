@@ -1,0 +1,207 @@
+/* Flow view — Sankey diagram. Full-bleed stage on warm paper. */
+
+.sankey {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-block: var(--space-8) var(--space-16);
+}
+
+/* Intro ------------------------------------------------------------------- */
+
+.sankey__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sankey__lede {
+  max-inline-size: 74ch;
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--ink-2);
+}
+
+.sankey__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.03em;
+  color: var(--ink-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.sankey__meta strong {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
+/* Stage ------------------------------------------------------------------- */
+
+/* Width + centring margin are set inline from the measured viewport so the
+   diagram spans the window without tripping over the vertical scrollbar. */
+.sankey__bleed {
+  inline-size: 100%;
+}
+
+.sankey__scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-inline: var(--page-gutter);
+  padding-block: var(--space-2);
+  overscroll-behavior-x: contain;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.sankey__stage {
+  position: relative;
+  min-inline-size: 1280px;
+}
+
+.sankey__stage--empty {
+  inline-size: 100%;
+}
+
+.sankey__svg {
+  display: block;
+  overflow: visible;
+}
+
+/* Column headers ---------------------------------------------------------- */
+
+.sankey__col-index {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  opacity: 0.65;
+}
+
+.sankey__col-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* Links ------------------------------------------------------------------- */
+
+.sankey__link {
+  stroke-opacity: 0.3;
+  mix-blend-mode: multiply;
+  cursor: pointer;
+  transition: stroke-opacity var(--dur-base) var(--ease-out);
+}
+
+.sankey__link.is-hot {
+  stroke-opacity: 0.75;
+}
+
+.sankey__link.is-cool {
+  stroke-opacity: 0.05;
+}
+
+/* Nodes ------------------------------------------------------------------- */
+
+.sankey__node {
+  cursor: pointer;
+  fill-opacity: 0.95;
+  stroke: var(--paper);
+  stroke-width: 0;
+  transition: fill-opacity var(--dur-base) var(--ease-out);
+}
+
+.sankey__node.is-cool {
+  fill-opacity: 0.18;
+}
+
+.sankey__node.is-selected {
+  stroke: var(--ink);
+  stroke-width: 2.5;
+  paint-order: stroke;
+}
+
+.sankey__node:focus-visible {
+  outline: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  paint-order: stroke;
+}
+
+/* Labels ------------------------------------------------------------------ */
+
+.sankey__label {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 500;
+  fill: var(--ink);
+  cursor: pointer;
+  /* Paper halo so names stay legible where they cross a ribbon. */
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3.5px;
+  stroke-linejoin: round;
+  transition: fill-opacity var(--dur-base) var(--ease-out);
+}
+
+.sankey__label.is-cool {
+  fill-opacity: 0.28;
+  stroke-opacity: 0.5;
+}
+
+.sankey__label.is-selected {
+  font-weight: 600;
+  fill: var(--accent-ink);
+}
+
+/* Tooltip ----------------------------------------------------------------- */
+
+.sankey__tip {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  inline-size: max-content;
+  max-inline-size: 20rem;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transform: translate(14px, -50%);
+}
+
+.sankey__tip.is-flipped {
+  transform: translate(calc(-100% - 14px), -50%);
+}
+
+.sankey__tip-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: var(--leading-snug);
+}
+
+.sankey__tip-body {
+  margin-block-start: 0.3em;
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+  line-height: var(--leading-snug);
+}
+
+/* Footnote ---------------------------------------------------------------- */
+
+.sankey__foot {
+  max-inline-size: 82ch;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  line-height: var(--leading-normal);
+  color: var(--ink-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sankey__link,
+  .sankey__node,
+  .sankey__label {
+    transition: none;
+  }
+}

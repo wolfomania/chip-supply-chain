@@ -1,0 +1,31 @@
+.logo {
+  --logo-size: 40px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  inline-size: var(--logo-size);
+  block-size: var(--logo-size);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.logo__img {
+  inline-size: calc(var(--logo-size) * 0.62);
+  block-size: calc(var(--logo-size) * 0.62);
+  object-fit: contain;
+}
+
+.logo__monogram {
+  font-family: var(--font-mono);
+  font-size: calc(var(--logo-size) * 0.34);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--tier-ink);
+  background: var(--tier-soft);
+  inline-size: 100%;
+  block-size: 100%;
+  display: grid;
+  place-items: center;
+}

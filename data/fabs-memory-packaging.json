@@ -1,0 +1,248 @@
+{
+  "companies": [
+    {
+      "id": "tsmc",
+      "name": "TSMC (Taiwan Semiconductor Manufacturing Company)",
+      "tier": "fabs",
+      "role": "Contract foundry that manufactures the world's most advanced logic chips for companies that only design them",
+      "description": "TSMC invented the pure-play foundry model in 1987: it designs nothing itself, it just builds other people's chips — Nvidia's Blackwell, Apple's A- and M-series, AMD's Instinct, Broadcom's custom accelerators — often on the same campus, for direct competitors. It is responsible for north of 90% of the world's leading-edge logic production, which is why a strait 130 km wide has become the single biggest tail risk in the global economy. Under US pressure it has opened Fab 21 in Arizona (N4 volume production from Q4 2024) and JASM in Kumamoto (12/16nm and 22/28nm from December 2024), but the company openly concedes its overseas sites run a node generation or two behind: the newest process is still made almost exclusively in Hsinchu and Tainan. The gap is not equipment — everyone can buy from the Big Five — it is decades of accumulated process know-how that has proven notoriously hard to export.",
+      "bottleneck": true,
+      "hq": { "city": "Hsinchu", "country": "Taiwan", "lat": 24.77, "lng": 121.01 },
+      "facilities": [
+        { "name": "Fab 18", "city": "Tainan", "country": "Taiwan", "lat": 23.11, "lng": 120.27, "note": "N3/N5 GigaFab in Southern Taiwan Science Park; the main 3nm site and now ramping N2" },
+        { "name": "Fab 21", "city": "Phoenix, Arizona", "country": "United States", "lat": 33.75, "lng": -112.16, "note": "First US site; N4 high-volume production since Q4 2024, N3 targeted 2H27" },
+        { "name": "JASM Kumamoto", "city": "Kikuyo, Kumamoto", "country": "Japan", "lat": 32.88, "lng": 130.8, "note": "JV with Sony and Denso; 12/16nm and 22/28nm since Dec 2024, ~55k wpm" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "leading-edge logic wafers for Hopper/Blackwell GPU dies (N4/N4P, moving to N3)" },
+        { "target": "apple", "what": "A-series and M-series SoCs; first and largest customer on every new node" },
+        { "target": "amd", "what": "Ryzen/EPYC CCDs and Instinct MI300-series compute dies" },
+        { "target": "broadcom", "what": "custom AI accelerator ASICs and networking silicon" },
+        { "target": "qualcomm", "what": "Snapdragon application processors and modem silicon" },
+        { "target": "tsmc-cowos", "what": "finished logic wafers fed into its own advanced packaging lines" }
+      ],
+      "website": "https://www.tsmc.com/",
+      "productUrl": "https://www.tsmc.com/english/dedicatedFoundry/technology/logic/l_3nm",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/TSMC_Fab_18_May_2025.jpg",
+      "imageCredit": "4300streetcar, CC BY 4.0, via Wikimedia Commons",
+      "logoDomain": "tsmc.com"
+    },
+    {
+      "id": "samsung-foundry",
+      "name": "Samsung Foundry (Samsung Electronics)",
+      "tier": "fabs",
+      "role": "The world's second-largest contract foundry, and the only company that does both leading-edge logic and memory",
+      "description": "Samsung is the only firm on Earth running leading-edge logic foundry and leading-edge memory under one roof, and it was first to production with gate-all-around transistors at 3nm in 2022. Even so it holds under a tenth of the foundry market against TSMC's roughly two-thirds, because yield problems have repeatedly cost it flagship customers. Its EUV logic lines sit at Hwaseong (S3) and Pyeongtaek (S5) south of Seoul, and its $17bn+ Taylor, Texas fab is the US beachhead — Tesla's AI5 taped out on Samsung's 2nm node there in 2026, with ramp production due in 2027.",
+      "bottleneck": false,
+      "hq": { "city": "Hwaseong, Gyeonggi", "country": "South Korea", "lat": 37.21, "lng": 127.05 },
+      "facilities": [
+        { "name": "Hwaseong Campus (S3 line)", "city": "Hwaseong", "country": "South Korea", "lat": 37.21, "lng": 127.05, "note": "First EUV logic line; 7nm/5nm/3nm GAA development and production" },
+        { "name": "Pyeongtaek Campus (S5 line)", "city": "Pyeongtaek", "country": "South Korea", "lat": 37.05, "lng": 127.05, "note": "World's largest semiconductor campus; foundry lines alongside DRAM/NAND" },
+        { "name": "Taylor Fab", "city": "Taylor, Texas", "country": "United States", "lat": 30.6, "lng": -97.44, "note": "SF2 (2nm) GAA; equipment move-in 2026, ramp production 2027, Tesla AI5/AI6" }
+      ],
+      "suppliesTo": [
+        { "target": "qualcomm", "what": "Snapdragon application processors and RF, historically second-sourced against TSMC" },
+        { "target": "nvidia", "what": "GPU dies on Samsung 8nm (GeForce RTX 30-series generation)" }
+      ],
+      "website": "https://semiconductor.samsung.com/foundry/",
+      "productUrl": "https://semiconductor.samsung.com/foundry/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/President_Biden_and_Yoon_Suk-yeol_at_the_Samsung_Electronics_Pyeongtaek_Campus.jpg",
+      "imageCredit": "Office of the President of the United States, public domain, via Wikimedia Commons",
+      "logoDomain": "samsung.com"
+    },
+    {
+      "id": "intel",
+      "name": "Intel Corporation",
+      "tier": "fabs",
+      "role": "The one big fab that also designs its own chips, now selling foundry capacity to outside customers",
+      "description": "Intel is the odd one out among the four big fabs: it designs, manufactures and packages its own CPUs, and since 2021 has also been renting that manufacturing out to external customers as Intel Foundry. Its comeback bet is 18A, a 2nm-class node combining RibbonFET gate-all-around transistors with PowerVia backside power delivery, which entered production at Fab 52 on the Ocotillo campus in Chandler, Arizona at the end of 2025 — the first leading-edge node in years developed and ramped entirely on US soil. Process R&D still happens at D1X in Hillsboro, Oregon, the fab that decides what every other Intel site will build next.",
+      "bottleneck": false,
+      "hq": { "city": "Santa Clara, California", "country": "United States", "lat": 37.39, "lng": -121.96 },
+      "facilities": [
+        { "name": "Ronler Acres / D1X", "city": "Hillsboro, Oregon", "country": "United States", "lat": 45.54, "lng": -122.93, "note": "Intel's process R&D fab; every new node is developed here first" },
+        { "name": "Fab 52, Ocotillo Campus", "city": "Chandler, Arizona", "country": "United States", "lat": 33.23, "lng": -111.92, "note": "18A high-volume production from late 2025; ~10k wafer starts per week at full ramp" },
+        { "name": "Fab 34", "city": "Leixlip", "country": "Ireland", "lat": 53.37, "lng": -6.5, "note": "Intel 4 / Intel 3 EUV production; Intel's leading-edge site in Europe" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "x86 CPUs and custom data-centre products under the 2025 Intel–Nvidia partnership" },
+        { "target": "amkor", "what": "front-end wafers sent to Amkor's Arizona campus for advanced packaging under their 2023 partnership" }
+      ],
+      "website": "https://www.intel.com/",
+      "productUrl": "https://www.intel.com/content/www/us/en/foundry/overview.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/67/Intel_Ronler_Acres_production.JPG",
+      "imageCredit": "M.O. Stevens, CC BY 3.0, via Wikimedia Commons",
+      "logoDomain": "intel.com"
+    },
+    {
+      "id": "globalfoundries",
+      "name": "GlobalFoundries",
+      "tier": "fabs",
+      "role": "Foundry for the 'essential' chips — power, RF, automotive and industrial silicon on mature and specialty nodes",
+      "description": "Spun out of AMD's manufacturing arm in 2009, GlobalFoundries abandoned the leading-edge race in 2018 and now competes on specialty processes instead: 22FDX FD-SOI, RF-SOI for phone front-ends, power management and automotive-grade silicon. That sounds unglamorous until you notice it touches most of the chips in cars, base stations and satellites — the company reckons more than 60% of the market depends on the categories it serves. Fab 8 in Malta, New York is the largest leading-capability fab in the US at around 400,000 wafers a year, and Fab 1 in Dresden is the biggest chip plant in Europe, heading past one million wafers a year by 2028 under a €1.1bn expansion.",
+      "bottleneck": false,
+      "hq": { "city": "Malta, New York", "country": "United States", "lat": 42.99, "lng": -73.83 },
+      "facilities": [
+        { "name": "Fab 8", "city": "Malta, New York", "country": "United States", "lat": 42.99, "lng": -73.83, "note": "300mm; ~400k wafers/year, targeted to triple over the next decade" },
+        { "name": "Fab 1", "city": "Dresden", "country": "Germany", "lat": 51.13, "lng": 13.7, "note": "Largest semiconductor fab in Europe; 22FDX/FDX+, expanding past 1M wafers/year by 2028" },
+        { "name": "Fab 7", "city": "Singapore", "country": "Singapore", "lat": 1.44, "lng": 103.79, "note": "RF-SOI, analog/mixed-signal and automotive capacity for Asian customers" }
+      ],
+      "suppliesTo": [
+        { "target": "qualcomm", "what": "RF-SOI front-end modules and switches for Snapdragon platforms" },
+        { "target": "amd", "what": "mature-node I/O dies and legacy products under a long-running wafer supply agreement" }
+      ],
+      "website": "https://gf.com/",
+      "productUrl": "https://gf.com/technology-platforms/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Aerial_photograph_of_Globalfoundries_Dresden.jpg",
+      "imageCredit": "Fensterblick, CC BY-SA 3.0, via Wikimedia Commons",
+      "logoDomain": "gf.com"
+    },
+    {
+      "id": "sk-hynix",
+      "name": "SK hynix",
+      "tier": "memory",
+      "role": "The world's leading maker of HBM — the stacked DRAM bolted onto every top-end AI accelerator",
+      "description": "SK hynix built its lead in high bandwidth memory by co-developing HBM with AMD a decade before anyone needed it, and it cashed in when the AI boom arrived: it was Nvidia's sole qualified HBM3 supplier, first to ship HBM3E in March 2024, and first to mass-produce 12-layer HBM3E in September 2024, holding an effective monopoly on Nvidia's top bins until Micron and Samsung qualified later. The whole AI data-centre build-out therefore rests on a memory stack designed in Icheon and assembled with TSV and bonding-wire processes that almost nobody outside South Korea can run at volume. Its Cheongju M15X fab is being tooled specifically as the company's HBM hub, and HBM output has been sold out a year or more in advance for several years running.",
+      "bottleneck": true,
+      "hq": { "city": "Icheon, Gyeonggi", "country": "South Korea", "lat": 37.14, "lng": 127.44 },
+      "facilities": [
+        { "name": "Icheon Campus (M10 / M14 / M16)", "city": "Icheon", "country": "South Korea", "lat": 37.14, "lng": 127.44, "note": "Headquarters plus the company's main leading-edge DRAM fabs, including the EUV M16" },
+        { "name": "Cheongju Campus (M15 / M15X)", "city": "Cheongju", "country": "South Korea", "lat": 36.63, "lng": 127.42, "note": "NAND site now being converted into the company's dedicated HBM hub; M15X tooling from late 2025" },
+        { "name": "Wuxi Fab (C2 / C2F)", "city": "Wuxi", "country": "China", "lat": 31.49, "lng": 120.31, "note": "About half of SK hynix's DRAM output; constrained by US export controls" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "HBM3 / HBM3E / HBM4 stacks for Hopper, Blackwell and Rubin accelerators" },
+        { "target": "tsmc-cowos", "what": "HBM stacks shipped in to be bonded onto silicon interposers next to the GPU die" },
+        { "target": "amd", "what": "HBM3E stacks for Instinct MI300/MI350-series accelerators" }
+      ],
+      "website": "https://www.skhynix.com/",
+      "productUrl": "https://product.skhynix.com/products/dram/hbm.go",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/b1/SK_Hynix_DDR5_Tall_MRDIMM.jpg",
+      "imageCredit": "4300streetcar, CC BY 4.0, via Wikimedia Commons",
+      "logoDomain": "skhynix.com"
+    },
+    {
+      "id": "micron",
+      "name": "Micron Technology",
+      "tier": "memory",
+      "role": "The only US-headquartered DRAM maker, and the third source of HBM for AI accelerators",
+      "description": "Micron is the last American DRAM company and one of only three firms left that can make leading-edge DRAM at all. Its 30,000 m² mega campus on the outskirts of Taichung — across the road from rice farms — is its largest DRAM site and its main HBM packaging hub, running billions of dollars of lithography equipment around the clock. In December 2025 it announced it was shutting down its Crucial consumer brand entirely by February 2026, walking away from the home-PC market to redirect every available wafer to data-centre customers, which is about as blunt a signal of where the money is as an industry can send.",
+      "bottleneck": false,
+      "hq": { "city": "Boise, Idaho", "country": "United States", "lat": 43.52, "lng": -116.16 },
+      "facilities": [
+        { "name": "Taichung Fab (Fab 16 campus)", "city": "Taichung", "country": "Taiwan", "lat": 24.19, "lng": 120.61, "note": "Micron's largest DRAM site and its primary HBM assembly hub" },
+        { "name": "Hiroshima Fab", "city": "Higashihiroshima", "country": "Japan", "lat": 34.43, "lng": 132.74, "note": "Advanced DRAM including the company's first EUV-based node" },
+        { "name": "Boise ID Fab", "city": "Boise, Idaho", "country": "United States", "lat": 43.52, "lng": -116.16, "note": "First new US memory fab in 20 years, co-located with HQ and R&D" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "HBM3E stacks for Blackwell-class accelerators, plus GDDR7 graphics memory" },
+        { "target": "tsmc-cowos", "what": "HBM stacks delivered for integration onto CoWoS interposers" },
+        { "target": "amd", "what": "HBM3E and server DRAM for Instinct accelerators and EPYC platforms" }
+      ],
+      "website": "https://www.micron.com/",
+      "productUrl": "https://www.micron.com/products/memory/hbm",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Micron_Fab_in_Taichung%2C_Taiwan.jpeg",
+      "imageCredit": "Thingreenline4546, CC BY-SA 4.0, via Wikimedia Commons",
+      "logoDomain": "micron.com"
+    },
+    {
+      "id": "samsung-memory",
+      "name": "Samsung Memory (Samsung Electronics)",
+      "tier": "memory",
+      "role": "The world's largest maker of DRAM and NAND flash, and the third HBM supplier",
+      "description": "Samsung has been the number one memory maker since 1993 and holds roughly a third of the global DRAM market and a similar share of NAND, which means most phones, servers and SSDs on Earth contain its silicon. Its Pyeongtaek campus is the largest semiconductor manufacturing site in the world, big enough that each of its fab buildings dwarfs most companies' entire operations. In HBM it was the laggard — it spent well over a year failing Nvidia's qualification for HBM3E while SK hynix took the business — before finally clearing it, a rare case of the industry's biggest memory maker being locked out of its most profitable product.",
+      "bottleneck": false,
+      "hq": { "city": "Suwon, Gyeonggi", "country": "South Korea", "lat": 37.26, "lng": 127.03 },
+      "facilities": [
+        { "name": "Pyeongtaek Campus (P1–P4)", "city": "Pyeongtaek", "country": "South Korea", "lat": 37.05, "lng": 127.05, "note": "World's largest semiconductor campus; leading-edge DRAM, V-NAND and HBM" },
+        { "name": "Hwaseong Campus", "city": "Hwaseong", "country": "South Korea", "lat": 37.21, "lng": 127.05, "note": "Long-standing DRAM/NAND lines and the first EUV memory production" },
+        { "name": "Xi'an Fab", "city": "Xi'an", "country": "China", "lat": 34.34, "lng": 108.94, "note": "Roughly 40% of Samsung's NAND flash output" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "HBM3E stacks and GDDR graphics memory" },
+        { "target": "tsmc-cowos", "what": "HBM stacks supplied for interposer integration alongside logic dies" },
+        { "target": "apple", "what": "LPDDR mobile DRAM and NAND flash for iPhone and Mac" },
+        { "target": "amd", "what": "HBM and server DRAM for accelerator and EPYC platforms" }
+      ],
+      "website": "https://semiconductor.samsung.com/",
+      "productUrl": "https://semiconductor.samsung.com/dram/hbm/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/71/President_Biden_visited_the_Samsung_Electronics_Pyeongtaek_Campus_%281%29.jpg",
+      "imageCredit": "Office of the President of the United States, public domain, via Wikimedia Commons",
+      "logoDomain": "samsung.com"
+    },
+    {
+      "id": "tsmc-cowos",
+      "name": "TSMC CoWoS (Advanced Packaging)",
+      "tier": "packaging",
+      "role": "The chip-on-wafer-on-substrate line that bonds GPU dies and HBM stacks onto a single silicon interposer",
+      "description": "CoWoS is the step that turns a GPU die and its ring of HBM stacks into one finished AI accelerator, mounting both on a silicon interposer and then onto a substrate. For roughly 18 months across 2024–25 this single process — concentrated almost entirely inside TSMC's own advanced packaging fabs in Taiwan — was the binding constraint on the entire AI industry: Nvidia could design all the chips it wanted and SK hynix could make all the memory it wanted, but nothing shipped faster than one packaging line in Taiwan could move. TSMC has been racing to catch up, roughly doubling capacity from about 35,000 wafers a month at the end of 2024 to around 75,000 a year later, with a target near 130,000 by late 2026 — and it is still reported as sold out.",
+      "bottleneck": true,
+      "hq": { "city": "Hsinchu", "country": "Taiwan", "lat": 24.77, "lng": 121.01 },
+      "facilities": [
+        { "name": "Advanced Packaging Fab 2 (AP2)", "city": "Tainan", "country": "Taiwan", "lat": 23.11, "lng": 120.27, "note": "Advanced packaging plant in Southern Taiwan Science Park, alongside Fab 18" },
+        { "name": "Advanced Packaging Fab 6 (AP6)", "city": "Zhunan, Miaoli", "country": "Taiwan", "lat": 24.69, "lng": 120.87, "note": "Key hub integrating CoWoS, SoIC, InFO and final test" },
+        { "name": "Advanced Packaging Fab 7 (AP7)", "city": "Taibao, Chiayi", "country": "Taiwan", "lat": 23.46, "lng": 120.31, "note": "Chiayi Science Park; phased build-out through 2027 to become the largest AP site" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "CoWoS-S/L packaging of Hopper, Blackwell and Rubin GPU dies with their HBM stacks" },
+        { "target": "amd", "what": "CoWoS and SoIC packaging for Instinct MI300/MI350-series accelerators" },
+        { "target": "broadcom", "what": "CoWoS packaging for custom hyperscaler AI accelerators and switch silicon" },
+        { "target": "apple", "what": "InFO and 3DFabric packaging for A-series and M-series processors" }
+      ],
+      "website": "https://www.tsmc.com/",
+      "productUrl": "https://www.tsmc.com/english/dedicatedFoundry/services/advanced-packaging",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c2/TSMC_AP2_building_May_2025.jpg",
+      "imageCredit": "4300streetcar, CC BY 4.0, via Wikimedia Commons",
+      "logoDomain": "tsmc.com"
+    },
+    {
+      "id": "ase",
+      "name": "ASE Technology Holding",
+      "tier": "packaging",
+      "role": "The world's largest outsourced semiconductor assembly and test provider (OSAT)",
+      "description": "ASE is the biggest company in a business almost nobody outside the industry can name: taking finished wafers from foundries, dicing them, wiring or bumping the dies into packages, and testing the result before it ships. With around $18.5bn of revenue it is the largest OSAT on Earth by a wide margin — more than double its nearest rival — and together with subsidiary SPIL it handles a large slice of all outsourced packaging and test globally. Its home base is the Nanzih industrial park in Kaohsiung, and it has become the industry's designated overflow valve as AI demand outruns TSMC's in-house advanced packaging capacity, pouring billions into new FOCoS and 2.5D lines in Kaohsiung.",
+      "bottleneck": false,
+      "hq": { "city": "Kaohsiung", "country": "Taiwan", "lat": 22.73, "lng": 120.32 },
+      "facilities": [
+        { "name": "Kaohsiung Nanzih Campus (K1–K12)", "city": "Kaohsiung", "country": "Taiwan", "lat": 22.73, "lng": 120.32, "note": "Headquarters and largest assembly/test site; new advanced packaging plants under construction" },
+        { "name": "Chungli Plant", "city": "Zhongli, Taoyuan", "country": "Taiwan", "lat": 24.96, "lng": 121.24, "note": "Flip-chip, wafer bumping and test for northern Taiwan customers" },
+        { "name": "ASE Penang", "city": "Bayan Lepas, Penang", "country": "Malaysia", "lat": 5.3, "lng": 100.28, "note": "Southeast Asian assembly and test hub, part of the geographic de-risking push" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "assembly, advanced packaging overflow and final test for AI accelerators" },
+        { "target": "amd", "what": "flip-chip, SiP and test services for CPU and accelerator products" },
+        { "target": "qualcomm", "what": "wafer bumping, SiP modules and test for mobile platforms" },
+        { "target": "apple", "what": "system-in-package assembly and test for iPhone and wearable silicon" }
+      ],
+      "website": "https://www.aseglobal.com/",
+      "productUrl": "https://www.aseglobal.com/about",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/77/Kaohsiung_ASE_Group_headquarters.jpg",
+      "imageCredit": "人人生來平等, CC BY-SA 4.0, via Wikimedia Commons",
+      "logoDomain": "aseglobal.com"
+    },
+    {
+      "id": "amkor",
+      "name": "Amkor Technology",
+      "tier": "packaging",
+      "role": "The world's second-largest OSAT and the main packaging partner for reshored US chip production",
+      "description": "Amkor essentially invented the outsourced packaging business in 1968 and is now the number two OSAT worldwide with roughly 15% of the market, running 2.5D/3D TSV, fan-out and flip-chip lines across Asia. Its strategic significance is geographic: a wafer finished at TSMC Arizona still had to fly to Taiwan to be packaged, which quietly undercut the whole point of reshoring. Amkor is fixing that with a $7bn advanced packaging and test campus in Peoria, Arizona — broken ground in October 2025, over 750,000 sq ft of cleanroom, production from early 2028 — built explicitly to finish TSMC's Arizona wafers on the same side of the Pacific, with Apple and Nvidia named as anchor customers.",
+      "bottleneck": false,
+      "hq": { "city": "Tempe, Arizona", "country": "United States", "lat": 33.35, "lng": -111.93 },
+      "facilities": [
+        { "name": "Peoria Advanced Packaging Campus", "city": "Peoria, Arizona", "country": "United States", "lat": 33.69, "lng": -112.31, "note": "$7bn, two-phase campus; first US high-volume advanced packaging site, production from early 2028" },
+        { "name": "Amkor Bac Ninh (Factory 1)", "city": "Bac Ninh", "country": "Vietnam", "lat": 21.19, "lng": 106.05, "note": "Flagship $1.6bn SiP and advanced packaging plant opened 2023" },
+        { "name": "Amkor Korea (K1–K5)", "city": "Incheon", "country": "South Korea", "lat": 37.45, "lng": 126.7, "note": "Core R&D and high-density fan-out / TSV packaging operations" }
+      ],
+      "suppliesTo": [
+        { "target": "apple", "what": "advanced packaging and test, and the named anchor customer for the Arizona campus" },
+        { "target": "nvidia", "what": "advanced packaging and test capacity for US-fabbed accelerator silicon" },
+        { "target": "qualcomm", "what": "wafer-level and fan-out packaging for mobile and RF products" },
+        { "target": "broadcom", "what": "flip-chip and 2.5D TSV packaging for networking and custom ASICs" }
+      ],
+      "website": "https://amkor.com/",
+      "productUrl": "https://amkor.com/technology/25d-3d-tsv/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Secretary_Blinken_Tours_Amkor_Technology.jpg",
+      "imageCredit": "U.S. Department of State (Chuck Kennedy), public domain — Amkor plant, Manila, Philippines",
+      "logoDomain": "amkor.com"
+    }
+  ]
+}

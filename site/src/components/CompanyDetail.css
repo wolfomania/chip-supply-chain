@@ -1,0 +1,221 @@
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.detail__head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.detail__name {
+  font-size: var(--text-xl);
+  line-height: 1.15;
+}
+
+.detail__role {
+  margin-block-start: 0.3em;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--ink-3);
+}
+
+.detail__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.detail__desc {
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--ink-2);
+}
+
+.detail__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.detail__section .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  padding-block-end: var(--space-2);
+  border-block-end: 1px solid var(--line);
+}
+
+.detail__count {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-4);
+}
+
+.detail__hq {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45em;
+  font-size: var(--text-base);
+  color: var(--ink-2);
+}
+
+.detail__hq .icon {
+  inline-size: 1em;
+  block-size: 1em;
+  color: var(--tier);
+}
+
+.detail__coords {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--ink-4);
+  letter-spacing: 0.02em;
+}
+
+/* Facilities ------------------------------------------------------------- */
+
+.detail__facilities {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.detail__facilities li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+  border-inline-start: 2px solid color-mix(in oklab, var(--tier) 45%, transparent);
+}
+
+.detail__facility-name {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: var(--text-sm);
+}
+
+.detail__facility-loc {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+.detail__facility-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--tier-ink);
+  background: var(--tier-soft);
+  padding: 0.2em 0.5em;
+  border-radius: var(--radius-pill);
+}
+
+/* Relations -------------------------------------------------------------- */
+
+.detail__relations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.detail__relation {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  inline-size: 100%;
+  text-align: start;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+button.detail__relation:hover {
+  background: var(--tier-soft);
+}
+
+.detail__relation-arrow {
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--tier-soft);
+  color: var(--tier-ink);
+}
+
+.detail__relation-arrow .icon {
+  inline-size: 0.85rem;
+  block-size: 0.85rem;
+}
+
+.detail__relation-body {
+  min-inline-size: 0;
+}
+
+.detail__relation-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5em;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.detail__relation-tier {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tier-ink);
+}
+
+.detail__relation-what {
+  display: block;
+  margin-block-start: 0.15em;
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--ink-3);
+}
+
+/* Links ------------------------------------------------------------------ */
+
+.detail__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding-block-start: var(--space-2);
+}
+
+.detail__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.5em 0.9em;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--ink-2);
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.detail__link:hover {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-color: color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.detail__link .icon {
+  inline-size: 0.9em;
+  block-size: 0.9em;
+}

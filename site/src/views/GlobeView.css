@@ -1,0 +1,367 @@
+/* ==========================================================================
+   Globe view — WebGL canvas on paper.
+   The renderer clears to transparent, so the "sky" below is plain CSS and
+   the scene sits in the same warm light as the rest of the page.
+   ========================================================================== */
+
+.globe {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-block: var(--space-8) var(--space-16);
+}
+
+/* Header ------------------------------------------------------------------ */
+
+.globe__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.globe__title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--ink);
+}
+
+.globe__standfirst {
+  max-inline-size: 62ch;
+  color: var(--ink-3);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+}
+
+.globe__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin-block-start: var(--space-2);
+}
+
+.globe__stats dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink-4);
+}
+
+.globe__stats dd {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stage ------------------------------------------------------------------- */
+
+.globe__stage {
+  position: relative;
+  block-size: clamp(30rem, 75vh, 54rem);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  isolation: isolate;
+  cursor: grab;
+  /* A pale sky: cool at the top, warm paper at the horizon. */
+  background:
+    radial-gradient(120% 90% at 50% 6%, #eef3f8 0%, #f6f4ee 46%, var(--paper) 100%),
+    var(--paper);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), var(--shadow-sm);
+  touch-action: none;
+}
+
+.globe__stage:active {
+  cursor: grabbing;
+}
+
+.globe__stage canvas {
+  display: block;
+}
+
+/* Loading ----------------------------------------------------------------- */
+
+.globe__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  text-align: center;
+  padding: var(--space-6);
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+}
+
+.globe__loading-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.02em;
+  color: var(--ink-4);
+}
+
+.globe__loading-orb {
+  inline-size: 3.5rem;
+  block-size: 3.5rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 30%, #ffffff 0%, #dfe7ef 40%, #c3cfdb 72%, #aab8c6 100%);
+  box-shadow: 0 0 0 1px var(--line), var(--shadow-md);
+  animation: globe-pulse 1.6s var(--ease-in-out) infinite;
+}
+
+@keyframes globe-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Legend ------------------------------------------------------------------ */
+
+.globe__legend {
+  position: absolute;
+  inset-block-start: var(--space-4);
+  inset-inline-start: var(--space-4);
+  z-index: 2;
+  max-inline-size: 15rem;
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+}
+
+.globe__legend-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-block-end: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink-4);
+}
+
+.globe__legend-reset {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.globe__legend-reset:hover {
+  color: var(--accent-ink);
+  text-decoration: underline;
+}
+
+.globe__legend ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.globe__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  inline-size: 100%;
+  padding: 0.3em 0.4em;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-family: inherit;
+  font-size: var(--text-xs);
+  color: var(--ink-2);
+  text-align: start;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+}
+
+.globe__legend-item:hover {
+  background: var(--surface-sunken);
+}
+
+.globe__legend-item.is-off {
+  opacity: 0.42;
+}
+
+.globe__legend-item.is-off .globe__legend-label {
+  text-decoration: line-through;
+}
+
+.globe__legend-dot {
+  flex: none;
+  inline-size: 0.6rem;
+  block-size: 0.6rem;
+  border-radius: 50%;
+  background: var(--tier-dot, var(--ink-3));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--tier-dot, var(--ink-3)) 30%, transparent);
+}
+
+.globe__legend-item.is-off .globe__legend-dot {
+  background: none;
+  box-shadow: inset 0 0 0 1.5px var(--tier-dot, var(--ink-3));
+}
+
+.globe__legend-label {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.globe__legend-count {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-4);
+}
+
+/* Hint -------------------------------------------------------------------- */
+
+.globe__hint {
+  position: absolute;
+  inset-block-end: var(--space-4);
+  inset-inline-end: var(--space-4);
+  z-index: 2;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.03em;
+  color: var(--ink-4);
+  background: color-mix(in oklab, var(--surface) 76%, transparent);
+  border-radius: var(--radius-pill);
+  padding: 0.35em 0.85em;
+}
+
+/* Tooltip ----------------------------------------------------------------- */
+/* float-tooltip injects its own dark style at runtime; the extra class here
+   out-specifies it so hover labels read as page furniture, not a game HUD. */
+
+.globe__stage .float-tooltip-kap {
+  max-inline-size: min(22rem, 60vw);
+  padding: 0;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+}
+
+.globe-tip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--tip-accent, var(--ink-3));
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-2);
+  text-align: start;
+  white-space: normal;
+}
+
+.globe-tip__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--tip-accent, var(--ink-4));
+}
+
+.globe-tip__title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  color: var(--ink);
+}
+
+.globe-tip__owner {
+  font-size: var(--text-2xs);
+  color: var(--ink-3);
+}
+
+.globe-tip__detail {
+  color: var(--ink-2);
+  margin-block-start: 0.2em;
+}
+
+.globe-tip__place {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--ink-4);
+  margin-block-start: 0.25em;
+}
+
+.globe-tip__flag {
+  align-self: start;
+  margin-block-start: 0.4em;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--alert-ink);
+  background: var(--alert-soft);
+  border-radius: var(--radius-pill);
+  padding: 0.25em 0.7em;
+}
+
+.globe-tip--arc {
+  border-inline-start-color: var(--line-strong);
+}
+
+/* Responsive -------------------------------------------------------------- */
+
+@media (max-width: 640px) {
+  .globe__stage {
+    block-size: clamp(24rem, 70vh, 40rem);
+  }
+
+  .globe__legend {
+    inset-block-start: auto;
+    inset-block-end: var(--space-4);
+    inset-inline-start: var(--space-3);
+    max-inline-size: 11rem;
+    padding: var(--space-2);
+  }
+
+  .globe__hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe__loading-orb {
+    animation: none;
+  }
+}

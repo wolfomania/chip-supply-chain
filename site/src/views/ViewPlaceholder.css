@@ -1,0 +1,154 @@
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-block: var(--space-8) var(--space-20);
+}
+
+.stage__box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+  min-block-size: 26rem;
+  justify-content: center;
+  padding: var(--space-12) var(--space-6);
+  border-radius: var(--radius-xl);
+  border: 1px dashed var(--line-strong);
+  background: linear-gradient(var(--surface-sunken), var(--surface-sunken)) padding-box,
+    repeating-linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--line) 60%, transparent) 0 1px,
+        transparent 1px 9px
+      )
+      padding-box;
+  overflow: hidden;
+}
+
+.stage__icon {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-3);
+  margin-block-end: var(--space-1);
+}
+
+.stage__icon .icon {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+.stage__title {
+  font-size: var(--text-2xl);
+}
+
+.stage__summary {
+  max-inline-size: 52ch;
+  color: var(--ink-3);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+}
+
+.stage__plan {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-block-start: var(--space-2);
+  max-inline-size: 60ch;
+}
+
+.stage__plan li {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.02em;
+  color: var(--ink-3);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 0.4em 0.8em;
+}
+
+.stage__stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-8);
+  margin-block-start: var(--space-6);
+  padding-block-start: var(--space-6);
+  border-block-start: 1px solid var(--line);
+  inline-size: min(100%, 34rem);
+}
+
+.stage__stats dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink-4);
+}
+
+.stage__stats dd {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.stage__wiring {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.stage__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.stage__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 0.45em 0.9em;
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+
+.stage__chip:hover {
+  background: var(--tier-soft);
+  border-color: color-mix(in oklab, var(--tier) 35%, transparent);
+}
+
+.stage__chip.is-selected {
+  background: var(--tier-soft);
+  border-color: var(--tier);
+  color: var(--tier-ink);
+}
+
+.stage__chip-dot {
+  inline-size: 0.5em;
+  block-size: 0.5em;
+  border-radius: 50%;
+  background: var(--tier);
+}
+
+.stage__chip-tier {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}

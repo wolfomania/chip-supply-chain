@@ -1,0 +1,278 @@
+{
+  "companies": [
+    {
+      "id": "trumpf",
+      "name": "TRUMPF SE + Co. KG",
+      "tier": "equipment-suppliers",
+      "role": "The CO2 drive laser that ignites the plasma inside every EUV lithography machine",
+      "description": "TRUMPF is a family-owned German machine-tool and laser company that builds the only laser on Earth capable of driving an EUV light source. In five amplifier stages it boosts a CO2 seed pulse of a few watts more than 10,000 times to over 30 kilowatts of mean power, then fires it twice at each of 50,000 tin droplets per second. The finished laser weighs more than 10 tonnes and contains around 450,000 individual parts, and there is no second supplier: ASML's EUV roadmap is gated by TRUMPF's amplifier roadmap. In 2025 ASML gave TRUMPF its Technology supplier award for 'first light' from a next-generation high-energy EUV laser.",
+      "bottleneck": true,
+      "hq": { "city": "Ditzingen", "country": "Germany", "lat": 48.83, "lng": 9.07 },
+      "facilities": [
+        { "name": "Ditzingen campus", "city": "Ditzingen", "country": "Germany", "lat": 48.83, "lng": 9.07, "note": "Multi-storey EUV laser assembly hall; ~EUR 70M invested in a dedicated EUV laser building" },
+        { "name": "TRUMPF Lasersystems for Semiconductor Manufacturing", "city": "Schramberg", "country": "Germany", "lat": 48.23, "lng": 8.38, "note": "Laser and optics production for the EUV drive laser chain" },
+        { "name": "Access Laser (acquired 2023)", "city": "Marysville, WA", "country": "United States", "lat": 48.05, "lng": -122.18, "note": "CO2 seed laser sources; vertical integration of the EUV laser supply chain" }
+      ],
+      "suppliesTo": [
+        { "target": "asml", "what": "CO2 drive laser / beam amplifier chain for EUV light sources" },
+        { "target": "cymer", "what": "amplified CO2 laser beam that vaporises the tin droplets in the LPP source" }
+      ],
+      "website": "https://www.trumpf.com",
+      "productUrl": "https://www.trumpf.com/en_US/solutions/applications/euv-lithography/euv-drive-laser/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/7/76/Trumpf_Ditzingen_Luftbild_2022-06-29.jpg",
+      "imageCredit": "TRUMPF, CC BY-SA 4.0, via Wikimedia Commons",
+      "logoDomain": "trumpf.com"
+    },
+    {
+      "id": "zeiss-smt",
+      "name": "Carl Zeiss SMT GmbH",
+      "tier": "equipment-suppliers",
+      "role": "EUV projection optics — the mirrors that focus 13.5 nm light onto the wafer",
+      "description": "ZEISS Semiconductor Manufacturing Technology, based in Oberkochen, makes the illumination and projection optics for every ASML EUV scanner. EUV light is absorbed by glass and by air, so the pattern is steered entirely by mirrors coated with 100+ alternating molybdenum/silicon layers a few nanometres thick and polished to roughly 50 picometres RMS — less than one atom of roughness. ZEISS's own comparison: scale one of these mirrors up to the size of Germany and the tallest bump on it would still be under a millimetre. ASML has no alternative supplier, and ZEISS is a co-investor in ASML's High-NA EUV programme.",
+      "bottleneck": true,
+      "hq": { "city": "Oberkochen", "country": "Germany", "lat": 48.78, "lng": 10.1 },
+      "facilities": [
+        { "name": "Oberkochen headquarters and optics plant", "city": "Oberkochen", "country": "Germany", "lat": 48.78, "lng": 10.1, "note": "EUV projection and illumination optics assembly" },
+        { "name": "ZEISS Wetzlar", "city": "Wetzlar", "country": "Germany", "lat": 50.56, "lng": 8.5, "note": "Precision optics and blanks; new multifunctional factory in Dillfeld" },
+        { "name": "ZEISS Jena", "city": "Jena", "country": "Germany", "lat": 50.93, "lng": 11.59, "note": "Coating and Semiconductor Mask Solutions (photomask repair/inspection)" }
+      ],
+      "suppliesTo": [
+        { "target": "asml", "what": "EUV and DUV projection optics, illuminators, ultra-smooth Mo/Si multilayer mirrors" }
+      ],
+      "website": "https://www.zeiss.com/semiconductor-manufacturing-technology/home.html",
+      "productUrl": "https://www.zeiss.com/semiconductor-manufacturing-technology/inspiring-technology/euv-lithography.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Carl-zeiss-oberkochen-south-smt-building-2014.jpg",
+      "imageCredit": "Hardwareonkel, CC BY-SA 4.0, via Wikimedia Commons",
+      "logoDomain": "zeiss.com"
+    },
+    {
+      "id": "cymer",
+      "name": "Cymer LLC (ASML San Diego)",
+      "tier": "equipment-suppliers",
+      "role": "Light sources for lithography: DUV excimer lasers and the EUV laser-produced-plasma source",
+      "description": "Founded in 1986 by two college friends in San Diego and acquired by ASML in 2013, Cymer built the excimer laser light sources (ArF and KrF) that made deep-ultraviolet lithography an industry. The same San Diego site now designs, qualifies and builds ASML's EUV laser-produced-plasma source, including the droplet generator that fires 50,000 molten tin droplets a second into the path of TRUMPF's CO2 laser, flashing each into a ~220,000 C plasma that radiates 13.5 nm light. ASML bought the company precisely because the light source was the single hardest bottleneck on the EUV roadmap.",
+      "bottleneck": true,
+      "hq": { "city": "San Diego, CA", "country": "United States", "lat": 33.02, "lng": -117.1 },
+      "facilities": [
+        { "name": "ASML San Diego / Cymer campus", "city": "San Diego, CA", "country": "United States", "lat": 33.02, "lng": -117.1, "note": "17075 Thornmint Court; EUV LPP source and DUV excimer laser R&D and manufacturing" }
+      ],
+      "suppliesTo": [
+        { "target": "asml", "what": "EUV laser-produced-plasma light source and droplet generator; ArF/KrF excimer light sources for DUV scanners" }
+      ],
+      "website": "https://www.cymer.com",
+      "productUrl": "https://www.asml.com/en/company/about-asml/cymer",
+      "imageUrl": "https://edge.sitecorecloud.io/asmlnetherlaaea-asmlcom-prd-5369/media/project/asmlcom/asmlcom/asml/images/company/about-asml/locations/san-diego/san-diego-office.jpg?h=1281&iar=0&w=1920",
+      "imageCredit": "ASML (San Diego / Cymer site)",
+      "logoDomain": "cymer.com"
+    },
+    {
+      "id": "vdl-etg",
+      "name": "VDL Enabling Technologies Group (VDL ETG)",
+      "tier": "equipment-suppliers",
+      "role": "Dutch contract manufacturer of the modules, frames and vacuum vessels inside ASML machines",
+      "description": "VDL ETG is the mechatronics arm of the family-owned Dutch VDL Groep and one of ASML's largest single suppliers. It co-engineers and builds complete modules rather than parts: the vacuum vessel that houses the EUV source with its cabling, wafer handlers, and the ultra-stiff frames that hold ZEISS's mirrors in position inside next-generation EUV machines. This is the invisible middle layer of the supply chain — a Brabant machine shop grown into a systems integrator that only exists because ASML sits 10 km away.",
+      "bottleneck": false,
+      "hq": { "city": "Eindhoven", "country": "Netherlands", "lat": 51.45, "lng": 5.49 },
+      "facilities": [
+        { "name": "VDL ETG Eindhoven", "city": "Eindhoven", "country": "Netherlands", "lat": 51.45, "lng": 5.49, "note": "De Schakel 22; system integration and cleanroom assembly for ASML" },
+        { "name": "VDL ETG Almelo", "city": "Almelo", "country": "Netherlands", "lat": 52.36, "lng": 6.66, "note": "Large precision frames and welded structures, incl. EUV mirror frames for ZEISS" },
+        { "name": "VDL ETG Switzerland", "city": "Trubbach", "country": "Switzerland", "lat": 47.09, "lng": 9.48, "note": "Precision machining and thin-film/vacuum technology" }
+      ],
+      "suppliesTo": [
+        { "target": "asml", "what": "mechatronic modules, wafer handlers, EUV source vacuum vessel, precision frames" },
+        { "target": "zeiss-smt", "what": "precision frames that suspend and position EUV mirrors" }
+      ],
+      "website": "https://www.vdletg.com",
+      "productUrl": "https://www.vdletg.com/en/markets/semiconductor-industry",
+      "imageUrl": "https://vdl.stream.prepr.io/32py8dotjloa/w_1152/vdl-etg-eindhoven.jpg",
+      "imageCredit": "VDL ETG",
+      "logoDomain": "vdletg.com"
+    },
+    {
+      "id": "asml",
+      "name": "ASML Holding N.V.",
+      "tier": "equipment",
+      "role": "The only maker of EUV lithography machines — the tools that print leading-edge chip patterns",
+      "description": "Spun out of a 1984 Philips joint venture in Veldhoven, ASML is the sole company able to build the TWINSCAN NXE:3800E, the EUV scanner behind every 2 nm-class logic and leading-edge DRAM process. One machine pulls together roughly 5,000 suppliers: TRUMPF's CO2 laser, ZEISS's atomically smooth mirrors, VDL's frames, vacuum pumps that remove atoms one at a time. The finished tool is too large to ship assembled — it goes out in roughly 250 crates aboard three Boeing 747s plus 40 freight containers and a small army of engineers who spend weeks rebuilding it on the fab floor. ASML is also one of the few non-American companies subject to US export controls.",
+      "bottleneck": true,
+      "hq": { "city": "Veldhoven", "country": "Netherlands", "lat": 51.41, "lng": 5.44 },
+      "facilities": [
+        { "name": "Veldhoven headquarters and final assembly", "city": "Veldhoven", "country": "Netherlands", "lat": 51.41, "lng": 5.44, "note": "EUV and DUV final integration, test and the ASML-imec High-NA EUV lab" },
+        { "name": "ASML Wilton", "city": "Wilton, CT", "country": "United States", "lat": 41.2, "lng": -73.44, "note": "EUV 'top module' with reticle stage and handler; EUV final assembly and test" },
+        { "name": "ASML San Diego (Cymer)", "city": "San Diego, CA", "country": "United States", "lat": 33.02, "lng": -117.1, "note": "EUV plasma light source and DUV excimer light sources" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "EUV and DUV immersion scanners for 3nm/2nm logic" },
+        { "target": "samsung-foundry", "what": "EUV and DUV immersion scanners" },
+        { "target": "intel", "what": "EUV scanners including first High-NA EXE systems" },
+        { "target": "globalfoundries", "what": "DUV immersion and dry scanners for mature nodes" },
+        { "target": "micron", "what": "EUV and DUV scanners for leading-edge DRAM" },
+        { "target": "sk-hynix", "what": "EUV and DUV scanners for DRAM and HBM base dies" },
+        { "target": "samsung-memory", "what": "EUV and DUV scanners for DRAM" }
+      ],
+      "website": "https://www.asml.com",
+      "productUrl": "https://www.asml.com/en/products/euv-lithography-systems/twinscan-nxe-3800e",
+      "imageUrl": "https://edge.sitecorecloud.io/asmlnetherlaaea-asmlcom-prd-5369/media/project/asmlcom/asmlcom/asml/images/products/euv-lithography-systems/nxe3800e_closed_left-cropped.png?h=1080&iar=0&w=1920",
+      "imageCredit": "ASML (TWINSCAN NXE:3800E product image)",
+      "logoDomain": "asml.com"
+    },
+    {
+      "id": "applied-materials",
+      "name": "Applied Materials, Inc.",
+      "tier": "equipment",
+      "role": "Deposition, ion implantation, CMP and metrology — most of the non-lithography toolset",
+      "description": "Applied Materials is the broadest equipment maker in the industry and the one almost nobody outside the fab has heard of. It supplies the deposition tools that lay down metal and insulator films an atom at a time, the ion implanters that literally put the 'semi' in semiconductor, the chemical-mechanical polishers that flatten each layer back down, and the metrology tools that check the previous steps worked. Its share of some of these niches is extreme — around 60%+ of CMP and roughly half of ion implantation — and without a fab full of Applied tools, even an ASML EUV scanner is a very expensive laser pointer.",
+      "bottleneck": true,
+      "hq": { "city": "Santa Clara, CA", "country": "United States", "lat": 37.39, "lng": -121.98 },
+      "facilities": [
+        { "name": "Santa Clara headquarters / Maydan Technology Center", "city": "Santa Clara, CA", "country": "United States", "lat": 37.39, "lng": -121.98, "note": "3050 Bowers Ave; R&D and customer demo fab" },
+        { "name": "Gloucester (ex-Varian Semiconductor)", "city": "Gloucester, MA", "country": "United States", "lat": 42.62, "lng": -70.71, "note": "Ion implantation systems; acquired with Varian in 2011" },
+        { "name": "Austin manufacturing campus", "city": "Austin, TX", "country": "United States", "lat": 30.39, "lng": -97.72, "note": "Semiconductor systems manufacturing" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "deposition, ion implant, CMP, epitaxy and metrology systems" },
+        { "target": "samsung-foundry", "what": "deposition, implant, CMP and metrology systems" },
+        { "target": "intel", "what": "deposition, implant, CMP and metrology systems" },
+        { "target": "globalfoundries", "what": "deposition, implant and CMP systems" },
+        { "target": "micron", "what": "deposition, implant and CMP systems for DRAM/NAND" },
+        { "target": "sk-hynix", "what": "deposition, implant and CMP systems for DRAM/NAND" },
+        { "target": "samsung-memory", "what": "deposition, implant and CMP systems" }
+      ],
+      "website": "https://www.appliedmaterials.com",
+      "productUrl": "https://www.appliedmaterials.com/us/en/semiconductor/products.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/93/Sitz_von_Applied_Materials_in_Santa_Clara.jpg",
+      "imageCredit": "Olaf2, CC BY-SA 4.0, via Wikimedia Commons",
+      "logoDomain": "appliedmaterials.com"
+    },
+    {
+      "id": "lam-research",
+      "name": "Lam Research Corporation",
+      "tier": "equipment",
+      "role": "Plasma etch — carving the lithographer's pattern into the actual silicon",
+      "description": "Lam Research dominates plasma etch, the step where the pattern a scanner projects in photoresist is actually cut into the wafer. Its Kiyo conductor-etch and Flex dielectric-etch modules, now on the compact Sense.i platform, are the reference tools for high-aspect-ratio features — the deep, near-vertical holes that make 3D NAND stacks and DRAM capacitors possible. Lam also supplies electrochemical deposition and photoresist strip/clean, so a single wafer can pass through its tools dozens of times. Its 2025 Akara conductor etch system added cryogenic etching and automated maintenance.",
+      "bottleneck": true,
+      "hq": { "city": "Fremont, CA", "country": "United States", "lat": 37.49, "lng": -121.93 },
+      "facilities": [
+        { "name": "Fremont headquarters", "city": "Fremont, CA", "country": "United States", "lat": 37.49, "lng": -121.93, "note": "4650 Cushing Parkway; HQ, R&D and manufacturing" },
+        { "name": "Tualatin campus", "city": "Tualatin, OR", "country": "United States", "lat": 45.37, "lng": -122.77, "note": "Major US etch/deposition manufacturing and R&D site" },
+        { "name": "Lam Manufacturing Malaysia", "city": "Batu Kawan, Penang", "country": "Malaysia", "lat": 5.24, "lng": 100.44, "note": "Largest factory in Lam's network, opened 2021, >800,000 sq ft" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "plasma etch, electrochemical deposition and clean systems" },
+        { "target": "samsung-foundry", "what": "plasma etch and deposition systems" },
+        { "target": "intel", "what": "plasma etch and deposition systems" },
+        { "target": "globalfoundries", "what": "plasma etch and clean systems" },
+        { "target": "micron", "what": "high-aspect-ratio etch for 3D NAND and DRAM" },
+        { "target": "sk-hynix", "what": "high-aspect-ratio etch for 3D NAND and DRAM" },
+        { "target": "samsung-memory", "what": "high-aspect-ratio etch for 3D NAND and DRAM" }
+      ],
+      "website": "https://www.lamresearch.com",
+      "productUrl": "https://www.lamresearch.com/products/our-processes/etch/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/38/Geb%C3%A4ude_von_Lam_Research_in_Fremont.jpg",
+      "imageCredit": "Olaf2, CC BY-SA 4.0, via Wikimedia Commons",
+      "logoDomain": "lamresearch.com"
+    },
+    {
+      "id": "kla",
+      "name": "KLA Corporation",
+      "tier": "equipment",
+      "role": "Wafer and reticle inspection plus process control — the fab's very expensive microscopes",
+      "description": "KLA makes most of the world's inspection and metrology equipment: the optical and e-beam systems that hunt for nanometre-scale defects on wafers, reticles and mask blanks and tell a fab whether what it just built is any good before millions of dollars of wafers get scrapped. Its Surfscan line dates back to 1984 and the Puma, Voyager and eS-series families remain the de facto standard for leading-edge yield management. KLA holds roughly 55-60% of the whole process-control market, a bigger share of its category than any other member of the 'big five'.",
+      "bottleneck": true,
+      "hq": { "city": "Milpitas, CA", "country": "United States", "lat": 37.43, "lng": -121.9 },
+      "facilities": [
+        { "name": "Milpitas headquarters", "city": "Milpitas, CA", "country": "United States", "lat": 37.43, "lng": -121.9, "note": "One Technology Drive; HQ, R&D and manufacturing" },
+        { "name": "Ann Arbor campus", "city": "Ann Arbor, MI", "country": "United States", "lat": 42.31, "lng": -83.71, "note": "Inspection and metrology engineering and manufacturing" },
+        { "name": "KLA India", "city": "Chennai", "country": "India", "lat": 12.99, "lng": 80.25, "note": "Largest R&D site outside the US" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "wafer/reticle inspection, overlay and CD metrology, process control software" },
+        { "target": "samsung-foundry", "what": "inspection and metrology systems" },
+        { "target": "intel", "what": "inspection and metrology systems" },
+        { "target": "globalfoundries", "what": "inspection and metrology systems" },
+        { "target": "micron", "what": "inspection and metrology for DRAM/NAND yield control" },
+        { "target": "sk-hynix", "what": "inspection and metrology for DRAM/NAND yield control" },
+        { "target": "samsung-memory", "what": "inspection and metrology systems" }
+      ],
+      "website": "https://www.kla.com",
+      "productUrl": "https://www.kla.com/products/chip-manufacturing",
+      "imageUrl": "https://www.kla.com/wp-content/uploads/chip-manufacturing-main.jpg",
+      "imageCredit": "KLA Corporation",
+      "logoDomain": "kla.com"
+    },
+    {
+      "id": "tokyo-electron",
+      "name": "Tokyo Electron Limited (TEL)",
+      "tier": "equipment",
+      "role": "Coater/developer tracks that bracket every lithography step, plus thermal processing and cleaning",
+      "description": "Tokyo Electron holds one of the quietest near-monopolies in the industry: roughly 90% of the global coater/developer market and effectively 100% of the tracks used with EUV. Its CLEAN TRACK LITHIUS platform coats each wafer with photoresist, hands it to the scanner and develops it afterwards, so no wafer reaches an ASML machine without passing through a TEL tool first — over 3,000 LITHIUS Pro systems have shipped. TEL also holds strong positions in thermal processing, single-wafer cleaning, etch and wafer bonding, which is why it sits in the 'big five' alongside far more famous names.",
+      "bottleneck": true,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.67, "lng": 139.74 },
+      "facilities": [
+        { "name": "Akasaka Biz Tower headquarters", "city": "Minato, Tokyo", "country": "Japan", "lat": 35.67, "lng": 139.74, "note": "5-3-1 Akasaka; corporate HQ" },
+        { "name": "Tokyo Electron Kyushu", "city": "Koshi, Kumamoto", "country": "Japan", "lat": 32.88, "lng": 130.79, "note": "Coater/developer, cleaning and 3D-packaging bonder development and manufacturing" },
+        { "name": "Tokyo Electron Miyagi", "city": "Taiwa, Miyagi", "country": "Japan", "lat": 38.42, "lng": 140.89, "note": "Plasma etch system development and manufacturing" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "EUV/DUV coater-developer tracks, thermal processing, cleaning and etch" },
+        { "target": "samsung-foundry", "what": "coater-developer tracks, thermal processing and cleaning" },
+        { "target": "intel", "what": "coater-developer tracks, thermal processing and cleaning" },
+        { "target": "globalfoundries", "what": "coater-developer tracks and cleaning systems" },
+        { "target": "micron", "what": "coater-developer tracks, deposition and cleaning for DRAM/NAND" },
+        { "target": "sk-hynix", "what": "coater-developer tracks and cleaning for DRAM/NAND" },
+        { "target": "samsung-memory", "what": "coater-developer tracks and cleaning systems" }
+      ],
+      "website": "https://www.tel.com",
+      "productUrl": "https://www.tel.com/product/lithius.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Akasaka-Biz-Tower-01.jpg",
+      "imageCredit": "Rs1421, CC BY-SA 3.0, via Wikimedia Commons (Akasaka Biz Tower, TEL headquarters)",
+      "logoDomain": "tel.com"
+    },
+    {
+      "id": "nikon",
+      "name": "Nikon Corporation",
+      "tier": "equipment",
+      "role": "ArF immersion scanners and i-line steppers for mature and mid-tier nodes",
+      "description": "Yes, the camera company — Nikon is one of only two firms besides ASML that still builds semiconductor lithography systems, and with ASML the only other maker of ArF immersion scanners, though ASML holds roughly 90% of that market. Its line runs from the NSR-S636E immersion scanner down to the NSR-2205iL1 i-line stepper: a generation behind on resolution, with no EUV product at all. That matters less than it sounds, because most chips made today go into routers, washing machines and cars, and a Nikon tool skips the US export-control paperwork entirely. Intel was long its anchor customer; Nikon is now pushing into Korea, China and Southeast Asia.",
+      "bottleneck": false,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.6, "lng": 139.73 },
+      "facilities": [
+        { "name": "Nishi-Oi headquarters", "city": "Shinagawa, Tokyo", "country": "Japan", "lat": 35.6, "lng": 139.73, "note": "Head office opened 2024 on the site of Nikon's 1918 Oi plant" },
+        { "name": "Kumagaya Plant", "city": "Kumagaya, Saitama", "country": "Japan", "lat": 36.16, "lng": 139.4, "note": "Development and manufacture of NSR steppers and scanners" },
+        { "name": "Tochigi Nikon Precision", "city": "Otawara, Tochigi", "country": "Japan", "lat": 36.87, "lng": 140.03, "note": "Projection optics and lithography subassemblies" }
+      ],
+      "suppliesTo": [
+        { "target": "intel", "what": "ArF immersion scanners and steppers (long-standing lithography customer)" },
+        { "target": "tsmc", "what": "steppers and scanners for mature-node and non-critical layers" },
+        { "target": "globalfoundries", "what": "i-line and ArF steppers for mature nodes" }
+      ],
+      "website": "https://www.nikon.com",
+      "productUrl": "https://www.nikon.com/business/semi/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Nikon_HQ1.jpg",
+      "imageCredit": "Akonnchiroll, CC BY-SA 4.0, via Wikimedia Commons",
+      "logoDomain": "nikon.com"
+    },
+    {
+      "id": "canon",
+      "name": "Canon Inc.",
+      "tier": "equipment",
+      "role": "i-line and KrF steppers for mature nodes, plus nanoimprint lithography",
+      "description": "The other camera maker in the lithography business, Canon dominates the unglamorous end of the market with roughly 80% of i-line lithography and around 233 systems shipped in 2024 — about 30% of all lithography units sold worldwide, making it number two by volume even though it sells nothing near the leading edge. In 2023 it launched the FPA-1200NZ2C, the world's first commercial nanoimprint lithography tool, which stamps circuit patterns onto wafers instead of projecting them, and in July 2025 it opened its first new lithography factory in 21 years at Utsunomiya. For any fab that does not strictly need EUV, a Canon tool is cheaper and skips the diplomatic paperwork.",
+      "bottleneck": false,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.57, "lng": 139.69 },
+      "facilities": [
+        { "name": "Ota headquarters", "city": "Ota, Tokyo", "country": "Japan", "lat": 35.57, "lng": 139.69, "note": "30-2 Shimomaruko 3-chome; corporate HQ" },
+        { "name": "Utsunomiya lithography plant", "city": "Utsunomiya, Tochigi", "country": "Japan", "lat": 36.53, "lng": 139.98, "note": "New JPY 50bn factory opened July 2025 for i-line, KrF and nanoimprint systems" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "i-line and KrF steppers for mature-node and non-critical layers" },
+        { "target": "globalfoundries", "what": "i-line and KrF steppers for mature nodes" }
+      ],
+      "website": "https://global.canon",
+      "productUrl": "https://global.canon/en/product/indtech/semicon/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/Canon_headquarters_Ota%2C_Tokyo_distant.jpg",
+      "imageCredit": "Uenohikoma / Beao, CC BY-SA 3.0, via Wikimedia Commons",
+      "logoDomain": "canon.com"
+    }
+  ]
+}

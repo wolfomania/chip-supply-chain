@@ -1,0 +1,55 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.badge--md {
+  font-size: var(--text-xs);
+  padding: 0.35em 0.7em 0.35em 0.6em;
+}
+
+.badge--sm {
+  font-size: var(--text-2xs);
+  padding: 0.3em 0.6em 0.3em 0.5em;
+}
+
+.badge--tier {
+  color: var(--tier-ink);
+  background: var(--tier-soft);
+  border-color: color-mix(in oklab, var(--tier) 22%, transparent);
+}
+
+.badge__dot {
+  inline-size: 0.5em;
+  block-size: 0.5em;
+  border-radius: 50%;
+  background: var(--tier);
+  flex: 0 0 auto;
+}
+
+.badge--alert {
+  color: var(--alert-ink);
+  background: var(--alert-soft);
+  border-color: color-mix(in oklab, var(--alert) 24%, transparent);
+}
+
+.badge__icon {
+  inline-size: 0.85em;
+  block-size: 0.85em;
+  flex: 0 0 auto;
+}
+
+.badge--meta {
+  color: var(--ink-3);
+  background: var(--paper-2);
+  border-color: var(--line);
+  padding-inline: 0.6em;
+}

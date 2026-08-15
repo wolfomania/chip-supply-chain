@@ -1,0 +1,197 @@
+/* ==========================================================================
+   The Chip Supply Chain — design tokens
+   Editorial / infographic. Warm off-white paper, ink-dark text,
+   one restrained accent per supply-chain tier.
+   ========================================================================== */
+
+:root {
+  /* ---------- Neutral surfaces (warm, paper-like) ---------- */
+  --paper: #faf8f4; /* page background */
+  --paper-2: #f4f1ea; /* recessed band / rails */
+  --surface: #ffffff; /* cards, panels */
+  --surface-sunken: #f7f5f0;
+  --overlay: rgba(28, 25, 21, 0.28); /* scrim behind slide-in panel */
+
+  /* ---------- Ink ---------- */
+  --ink: #1c1915; /* headings, primary text */
+  --ink-2: #3c3730; /* body */
+  --ink-3: #6d6558; /* secondary / meta */
+  --ink-4: #9a9184; /* tertiary / placeholder */
+
+  /* ---------- Lines ---------- */
+  --line: #e4dfd5; /* hairline dividers, card borders */
+  --line-strong: #cfc8ba;
+
+  /* ---------- Functional accent (interactive, non-tier) ---------- */
+  --accent: #b1512f; /* warm rust — links, focus, active tab */
+  --accent-ink: #8e3f24;
+  --accent-soft: color-mix(in oklab, var(--accent) 10%, var(--paper));
+
+  /* ---------- Alert (bottleneck / sole-supplier) ---------- */
+  --alert: #b8442c;
+  --alert-ink: #8c3320;
+  --alert-soft: #fbeee9;
+
+  /* ======================================================================
+     Tier palette — 10 categorical hues, ordered as the chain flows.
+     Mid-lightness, mid-chroma: bright and distinguishable, never neon.
+     Each tier gets: base (fills, dots, strokes), -soft (tinted surface),
+     -ink (text-safe on paper / on -soft).
+     ====================================================================== */
+  --tier-raw-materials: #b4693c; /* terracotta */
+  --tier-materials: #b78c2a; /* amber */
+  --tier-equipment-suppliers: #7c8b39; /* olive */
+  --tier-equipment: #3d8c6b; /* green */
+  --tier-eda: #2c8a92; /* teal */
+  --tier-fabs: #3a72b8; /* blue */
+  --tier-memory: #6a63c4; /* periwinkle */
+  --tier-packaging: #96559f; /* plum */
+  --tier-designers: #bf4f79; /* rose */
+  --tier-logistics: #6f7681; /* slate — cross-cutting */
+
+  --tier-raw-materials-soft: color-mix(in oklab, var(--tier-raw-materials) 11%, var(--paper));
+  --tier-materials-soft: color-mix(in oklab, var(--tier-materials) 11%, var(--paper));
+  --tier-equipment-suppliers-soft: color-mix(in oklab, var(--tier-equipment-suppliers) 11%, var(--paper));
+  --tier-equipment-soft: color-mix(in oklab, var(--tier-equipment) 11%, var(--paper));
+  --tier-eda-soft: color-mix(in oklab, var(--tier-eda) 11%, var(--paper));
+  --tier-fabs-soft: color-mix(in oklab, var(--tier-fabs) 11%, var(--paper));
+  --tier-memory-soft: color-mix(in oklab, var(--tier-memory) 11%, var(--paper));
+  --tier-packaging-soft: color-mix(in oklab, var(--tier-packaging) 11%, var(--paper));
+  --tier-designers-soft: color-mix(in oklab, var(--tier-designers) 11%, var(--paper));
+  --tier-logistics-soft: color-mix(in oklab, var(--tier-logistics) 11%, var(--paper));
+
+  --tier-raw-materials-ink: color-mix(in oklab, var(--tier-raw-materials) 76%, var(--ink));
+  --tier-materials-ink: color-mix(in oklab, var(--tier-materials) 70%, var(--ink));
+  --tier-equipment-suppliers-ink: color-mix(in oklab, var(--tier-equipment-suppliers) 72%, var(--ink));
+  --tier-equipment-ink: color-mix(in oklab, var(--tier-equipment) 76%, var(--ink));
+  --tier-eda-ink: color-mix(in oklab, var(--tier-eda) 76%, var(--ink));
+  --tier-fabs-ink: color-mix(in oklab, var(--tier-fabs) 82%, var(--ink));
+  --tier-memory-ink: color-mix(in oklab, var(--tier-memory) 82%, var(--ink));
+  --tier-packaging-ink: color-mix(in oklab, var(--tier-packaging) 82%, var(--ink));
+  --tier-designers-ink: color-mix(in oklab, var(--tier-designers) 80%, var(--ink));
+  --tier-logistics-ink: color-mix(in oklab, var(--tier-logistics) 80%, var(--ink));
+
+  /* Set per-scope by [data-tier]; components read these three only. */
+  --tier: var(--ink-3);
+  --tier-soft: var(--paper-2);
+  --tier-ink: var(--ink-2);
+
+  /* ---------- Type ---------- */
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale — 1.2 minor third off a 16px base, clamped at the top */
+  --text-2xs: 0.6875rem; /* 11 — mono eyebrows */
+  --text-xs: 0.75rem; /* 12 — badges, meta */
+  --text-sm: 0.8125rem; /* 13 — dense UI */
+  --text-base: 0.9375rem; /* 15 — body */
+  --text-md: 1.0625rem; /* 17 — lead body */
+  --text-lg: 1.25rem; /* 20 — card titles */
+  --text-xl: 1.5rem; /* 24 — section heads */
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.25rem);
+  --text-3xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.25rem); /* site title */
+
+  --leading-tight: 1.12;
+  --leading-snug: 1.32;
+  --leading-normal: 1.55;
+  --leading-relaxed: 1.65;
+
+  --tracking-wide: 0.08em; /* mono eyebrows */
+  --tracking-wider: 0.14em;
+  --tracking-tight: -0.015em;
+
+  /* ---------- Space — 4px base ---------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* ---------- Radii ---------- */
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+
+  /* ---------- Elevation — soft, warm-tinted, never grey-blue ---------- */
+  --shadow-xs: 0 1px 2px rgba(46, 38, 27, 0.05);
+  --shadow-sm: 0 1px 2px rgba(46, 38, 27, 0.05), 0 2px 6px rgba(46, 38, 27, 0.04);
+  --shadow-md: 0 2px 4px rgba(46, 38, 27, 0.05), 0 8px 20px rgba(46, 38, 27, 0.07);
+  --shadow-lg: 0 4px 8px rgba(46, 38, 27, 0.06), 0 24px 48px rgba(46, 38, 27, 0.12);
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(0.22, 0.68, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.5, 0, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 340ms;
+
+  /* ---------- Layout ---------- */
+  --page-max: 1320px;
+  --page-gutter: clamp(1rem, 0.4rem + 2.4vw, 3rem);
+  --header-h: 3.5rem;
+  --panel-w: min(480px, 100vw);
+  --focus-ring: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
+}
+
+/* Per-tier scope. Add data-tier="<tier id>" to any element and its subtree
+   resolves --tier / --tier-soft / --tier-ink to that tier's accent. */
+[data-tier='raw-materials'] {
+  --tier: var(--tier-raw-materials);
+  --tier-soft: var(--tier-raw-materials-soft);
+  --tier-ink: var(--tier-raw-materials-ink);
+}
+[data-tier='materials'] {
+  --tier: var(--tier-materials);
+  --tier-soft: var(--tier-materials-soft);
+  --tier-ink: var(--tier-materials-ink);
+}
+[data-tier='equipment-suppliers'] {
+  --tier: var(--tier-equipment-suppliers);
+  --tier-soft: var(--tier-equipment-suppliers-soft);
+  --tier-ink: var(--tier-equipment-suppliers-ink);
+}
+[data-tier='equipment'] {
+  --tier: var(--tier-equipment);
+  --tier-soft: var(--tier-equipment-soft);
+  --tier-ink: var(--tier-equipment-ink);
+}
+[data-tier='eda'] {
+  --tier: var(--tier-eda);
+  --tier-soft: var(--tier-eda-soft);
+  --tier-ink: var(--tier-eda-ink);
+}
+[data-tier='fabs'] {
+  --tier: var(--tier-fabs);
+  --tier-soft: var(--tier-fabs-soft);
+  --tier-ink: var(--tier-fabs-ink);
+}
+[data-tier='memory'] {
+  --tier: var(--tier-memory);
+  --tier-soft: var(--tier-memory-soft);
+  --tier-ink: var(--tier-memory-ink);
+}
+[data-tier='packaging'] {
+  --tier: var(--tier-packaging);
+  --tier-soft: var(--tier-packaging-soft);
+  --tier-ink: var(--tier-packaging-ink);
+}
+[data-tier='designers'] {
+  --tier: var(--tier-designers);
+  --tier-soft: var(--tier-designers-soft);
+  --tier-ink: var(--tier-designers-ink);
+}
+[data-tier='logistics'] {
+  --tier: var(--tier-logistics);
+  --tier-soft: var(--tier-logistics-soft);
+  --tier-ink: var(--tier-logistics-ink);
+}

@@ -1,0 +1,380 @@
+{
+  "companies": [
+    {
+      "id": "quartz-sand",
+      "name": "Spruce Pine high-purity quartz (The Quartz Corp & Sibelco)",
+      "tier": "raw-materials",
+      "role": "Mines and refines the ultra-pure quartz sand used to make the crucibles that hold molten silicon",
+      "description": "Almost every silicon wafer on Earth begins in one Appalachian valley: Spruce Pine, North Carolina, where two companies - Belgian miner Sibelco (IOTA brand) and Norwegian-French joint venture The Quartz Corp - dig quartz pure enough to be melted into the crucibles that hold molten silicon during crystal pulling. Estimates put 70-90% of the world's semiconductor- and solar-grade high-purity quartz supply at roughly 20,000 tonnes a year from these two mines, refined to 99.999% SiO2 (partly at The Quartz Corp's plant in Drag, Norway). A crucible made from lesser quartz sheds contaminants straight into the melt and ruins the ingot, which is why no substitute deposit has been qualified at scale. Hurricane Helene shut both mines in September 2024 and briefly focused the entire chip industry on a town of 2,000 people.",
+      "bottleneck": true,
+      "hq": { "city": "Spruce Pine", "country": "United States", "lat": 35.92, "lng": -82.06 },
+      "facilities": [
+        { "name": "Sibelco Spruce Pine operations (IOTA high-purity quartz)", "city": "Spruce Pine", "country": "United States", "lat": 35.92, "lng": -82.07, "note": "World's leading HPQ source" },
+        { "name": "The Quartz Corp Spruce Pine plant", "city": "Spruce Pine", "country": "United States", "lat": 35.90, "lng": -82.05, "note": "Mining and primary processing" },
+        { "name": "The Quartz Corp Drag plant", "city": "Drag (Tysfjord)", "country": "Norway", "lat": 68.06, "lng": 16.06, "note": "Final purification to 99.999% SiO2" }
+      ],
+      "suppliesTo": [
+        { "target": "shin-etsu", "what": "high-purity quartz for Czochralski crucibles and polysilicon feedstock" },
+        { "target": "sumco", "what": "high-purity quartz for Czochralski crucibles" },
+        { "target": "globalwafers", "what": "high-purity quartz for Czochralski crucibles" },
+        { "target": "siltronic", "what": "high-purity quartz for Czochralski crucibles" }
+      ],
+      "website": "https://www.thequartzcorp.com/",
+      "productUrl": "https://www.sibelco.com/en/materials/high-purity-quartz",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Downtown_Spruce_Pine_NC.jpg",
+      "imageCredit": "Kubigula / Wikimedia Commons (public domain)",
+      "logoDomain": "thequartzcorp.com"
+    },
+    {
+      "id": "toto",
+      "name": "TOTO Ltd.",
+      "tier": "materials",
+      "role": "Ultra-pure alumina electrostatic chucks that hold silicon wafers inside etch and litho tools",
+      "description": "TOTO is the Kitakyushu company that makes the world's most famous toilets - and, since 1988, the ceramic electrostatic chucks (ESCs) that clamp a wafer in place with electrostatic force instead of mechanical clamps, which would warp it, or adhesive, which cannot be removed cleanly. The chucks are pressed from ultra-pure aluminium oxide with a secret additive blend, barely expand when heated, and carry machined channels for coolant so the wafer survives a plasma etch chamber; a dinner-plate-sized part can cost six figures. TOTO is one of only two suppliers at the leading edge of this market and is a key source for Lam Research's cryogenic 3D NAND etchers. By FY2025 its advanced-ceramics division was throwing off roughly 40% operating margins and had overtaken the housing business as the group's biggest profit source - data-centre customers are now outbidding hotels for TOTO's best ceramicists.",
+      "bottleneck": true,
+      "hq": { "city": "Kitakyushu", "country": "Japan", "lat": 33.88, "lng": 130.88 },
+      "facilities": [
+        { "name": "Nakatsu Plant", "city": "Nakatsu, Oita", "country": "Japan", "lat": 33.60, "lng": 131.19, "note": "Main advanced-ceramics plant; Y11.8bn smart factory opened 2020" },
+        { "name": "Chigasaki R&D Center", "city": "Chigasaki, Kanagawa", "country": "Japan", "lat": 35.33, "lng": 139.40, "note": "ESC materials R&D, refocusing on logic nodes" }
+      ],
+      "suppliesTo": [
+        { "target": "lam-research", "what": "electrostatic ceramic wafer chucks for plasma etchers" },
+        { "target": "applied-materials", "what": "electrostatic ceramic wafer chucks for deposition/etch tools" },
+        { "target": "tokyo-electron", "what": "electrostatic ceramic wafer chucks" },
+        { "target": "asml", "what": "precision ceramic wafer-handling components" }
+      ],
+      "website": "https://jp.toto.com/en/",
+      "productUrl": "https://jp.toto.com/en/products/ceramics/elewafer/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/d/d4/TOTO_main_office.JPG",
+      "imageCredit": "Kugel / Wikimedia Commons (public domain)",
+      "logoDomain": "toto.com"
+    },
+    {
+      "id": "ajinomoto",
+      "name": "Ajinomoto Co., Inc.",
+      "tier": "materials",
+      "role": "Ajinomoto Build-up Film (ABF), the insulating film inside almost every advanced chip package substrate",
+      "description": "The company that introduced the world to MSG also holds a near-total monopoly on the insulating film beneath modern CPUs and GPUs. Launched in 1999 out of Ajinomoto's amino-acid and fine-chemistry expertise, ABF is an epoxy/hardener/silica composite that is a stable dielectric, can be patterned at very fine pitch, and takes copper plating unusually well - a combination nobody has credibly matched. Ajinomoto holds well over 95% of the interlayer-insulation market for high-end package substrates, and layer counts have climbed from four or five to well past a dozen on an AI accelerator. It is investing about Y25bn to lift ABF capacity roughly 50% by 2030 across its Kawasaki and Gunma sites, where margins on the film now exceed 50%.",
+      "bottleneck": true,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.68, "lng": 139.77 },
+      "facilities": [
+        { "name": "Kawasaki Plant (Ajinomoto Fine-Techno)", "city": "Kawasaki, Kanagawa", "country": "Japan", "lat": 35.51, "lng": 139.72, "note": "ABF production and R&D" },
+        { "name": "Gunma Plant", "city": "Showa, Gunma", "country": "Japan", "lat": 36.55, "lng": 139.06, "note": "ABF production, expanding to 2030" }
+      ],
+      "suppliesTo": [
+        { "target": "ibiden", "what": "ABF buildup film for FC-BGA package substrates" },
+        { "target": "unimicron", "what": "ABF buildup film for FC-BGA package substrates" }
+      ],
+      "website": "https://www.ajinomoto.com/",
+      "productUrl": "https://www.ajinomoto.com/innovation/our_innovation/buildupfilm",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8e/Ajinomoto_headquarters_2018.jpg",
+      "imageCredit": "武蔵清亮 / Wikimedia Commons (CC BY-SA 4.0)",
+      "logoDomain": "ajinomoto.com"
+    },
+    {
+      "id": "ibiden",
+      "name": "IBIDEN Co., Ltd.",
+      "tier": "materials",
+      "role": "FC-BGA package substrates - the green board an AI die is soldered onto",
+      "description": "Ibiden, a former hydroelectric utility in Ogaki, Gifu, is one of only two companies that can build the highest-end flip-chip package substrates at volume. It laminates Ajinomoto's ABF film with copper, drills tens of thousands of microscopic vias, and turns it into the multi-layer square that a CPU or GPU die is mounted on. Its customers include Nvidia, Intel, AMD, TSMC and Samsung, and demand has been so far ahead of supply that customers buy everything it makes. In February 2026 Ibiden announced roughly $3.2bn of investment across FY2026-28 on top of the Ono and Kawama plant build-outs, aiming to multiply AI-substrate capacity.",
+      "bottleneck": true,
+      "hq": { "city": "Ogaki, Gifu", "country": "Japan", "lat": 35.36, "lng": 136.62 },
+      "facilities": [
+        { "name": "Ono Plant", "city": "Ono, Gifu", "country": "Japan", "lat": 35.51, "lng": 136.61, "note": "AI-server substrates; production from Oct 2025" },
+        { "name": "Kawama Plant (Cell 6)", "city": "Ogaki, Gifu", "country": "Japan", "lat": 35.35, "lng": 136.64, "note": "~$1.4bn expansion, ramping from FY2027" },
+        { "name": "Kawashima Plant", "city": "Kakamigahara, Gifu", "country": "Japan", "lat": 35.37, "lng": 136.79, "note": "IC package substrates" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "FC-BGA package substrates for AI accelerators" },
+        { "target": "intel", "what": "FC-BGA package substrates for CPUs" },
+        { "target": "amd", "what": "FC-BGA package substrates" },
+        { "target": "tsmc", "what": "package substrates for advanced packaging" }
+      ],
+      "website": "https://www.ibiden.com/",
+      "productUrl": "https://www.ibiden.com/product/electronics/merchandise/index.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Ibiden_Hauptverwaltung.jpg",
+      "imageCredit": "Ibiden / Wikimedia Commons (CC BY 2.5)",
+      "logoDomain": "ibiden.com"
+    },
+    {
+      "id": "unimicron",
+      "name": "Unimicron Technology Corp.",
+      "tier": "materials",
+      "role": "ABF/FC-BGA package substrates and high-layer-count PCBs for AI accelerators",
+      "description": "Unimicron, headquartered in Guishan, Taoyuan, is the other half of the ABF substrate duopoly alongside Ibiden and the largest IC-substrate maker by revenue. It takes Ajinomoto's build-up film, sandwiches it with copper and drills the microvia stacks that turn it into the substrate a GPU die sits on. Analysts put Unimicron at roughly 35% of ABF substrate supply for Nvidia's high-end GPUs and above 50% for custom AI ASICs such as Google TPU and AWS Trainium. Its Guangfu plant in Hukou, Hsinchu went to mass production ahead of schedule in late 2024 specifically for high-end AI parts, and it also builds substrates feeding TSMC's CoWoS packaging line.",
+      "bottleneck": true,
+      "hq": { "city": "Taoyuan", "country": "Taiwan", "lat": 25.03, "lng": 121.35 },
+      "facilities": [
+        { "name": "Shanying Plant", "city": "Guishan, Taoyuan", "country": "Taiwan", "lat": 25.03, "lng": 121.35, "note": "Headquarters and IC substrate production" },
+        { "name": "Yangmei Plant", "city": "Yangmei, Taoyuan", "country": "Taiwan", "lat": 24.92, "lng": 121.15, "note": "Advanced substrates incl. embedded-bridge work" },
+        { "name": "Guangfu Plant", "city": "Hukou, Hsinchu", "country": "Taiwan", "lat": 24.89, "lng": 121.04, "note": "High-end AI GPU substrates, MP from late 2024" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "ABF/FC-BGA package substrates for AI GPUs" },
+        { "target": "amd", "what": "ABF package substrates" },
+        { "target": "broadcom", "what": "ABF substrates for custom AI ASICs" },
+        { "target": "tsmc-cowos", "what": "substrates for chip-on-wafer-on-substrate packaging" }
+      ],
+      "website": "https://www.unimicron.com/en/",
+      "productUrl": "https://www.unimicron.com/en/product_FCBGA.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Shanying_Plant%2C_Unimicron_Technology_Corporation_20170102.jpg",
+      "imageCredit": "Padai / Wikimedia Commons (CC BY-SA 4.0)",
+      "logoDomain": "unimicron.com"
+    },
+    {
+      "id": "shin-etsu",
+      "name": "Shin-Etsu Chemical Co., Ltd.",
+      "tier": "materials",
+      "role": "The world's largest maker of bare 300mm silicon wafers (via Shin-Etsu Handotai)",
+      "description": "Shin-Etsu is the world's number one silicon wafer supplier, holding roughly 30% of the market on its own; together with SUMCO the two Japanese firms account for about half of all wafers made. Its Shin-Etsu Handotai arm melts electronic-grade polysilicon in quartz crucibles, pulls it into single-crystal ingots by the Czochralski process, then slices, laps and polishes them into the mirror-finish discs every chip starts life on. Shin-Etsu also makes photoresists and other fab chemicals. The fragility of this step is not theoretical: a 2021 fire at one of Shin-Etsu's suppliers helped trigger the global chip shortage that left half-finished cars sitting on dealer lots for two years.",
+      "bottleneck": true,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.68, "lng": 139.76 },
+      "facilities": [
+        { "name": "Shirakawa Plant", "city": "Nishigo, Fukushima", "country": "Japan", "lat": 37.13, "lng": 140.16, "note": "Leading-edge 300mm wafer production" },
+        { "name": "Isobe Plant", "city": "Annaka, Gunma", "country": "Japan", "lat": 36.32, "lng": 138.90, "note": "Semiconductor silicon" },
+        { "name": "Naoetsu Plant", "city": "Joetsu, Niigata", "country": "Japan", "lat": 37.18, "lng": 138.25, "note": "Semiconductor silicon and electronics materials" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "300mm polished and epitaxial silicon wafers" },
+        { "target": "samsung-foundry", "what": "300mm silicon wafers" },
+        { "target": "intel", "what": "300mm silicon wafers" },
+        { "target": "micron", "what": "300mm silicon wafers for DRAM" },
+        { "target": "sk-hynix", "what": "300mm silicon wafers for DRAM/HBM" }
+      ],
+      "website": "https://www.shinetsu.co.jp/en/",
+      "productUrl": "https://www.shinetsu.co.jp/en/products/electronics-materials/silicon-wafer/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Marunouchi_Eiraku_Building.jpg",
+      "imageCredit": "Kakidai / Wikimedia Commons (CC BY-SA 4.0) - Marunouchi Eiraku Building, Shin-Etsu head office",
+      "logoDomain": "shinetsu.co.jp"
+    },
+    {
+      "id": "sumco",
+      "name": "SUMCO Corporation",
+      "tier": "materials",
+      "role": "Number two global supplier of 300mm silicon wafers",
+      "description": "SUMCO, formed from the silicon businesses of Sumitomo Metal Industries and Mitsubishi Materials, is the world's second-largest silicon wafer maker with roughly a quarter to a third of the market. It grows single crystals at Saga, Yonezawa and other sites, centralises wafering at Imari in Kyushu, and opened a dedicated 300mm epitaxial wafer plant in Chitose, Hokkaido - conveniently close to Rapidus. Between SUMCO and Shin-Etsu, two Japanese companies supply about half the bare silicon that every fab on the planet consumes.",
+      "bottleneck": true,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.65, "lng": 139.75 },
+      "facilities": [
+        { "name": "Imari Plant", "city": "Imari, Saga", "country": "Japan", "lat": 33.27, "lng": 129.88, "note": "Main 300mm wafering site" },
+        { "name": "Chitose Plant", "city": "Chitose, Hokkaido", "country": "Japan", "lat": 42.82, "lng": 141.65, "note": "300mm epitaxial wafers" },
+        { "name": "Yonezawa Plant", "city": "Yonezawa, Yamagata", "country": "Japan", "lat": 37.92, "lng": 140.12, "note": "300mm crystal growing" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "300mm polished and epitaxial silicon wafers" },
+        { "target": "samsung-foundry", "what": "300mm silicon wafers" },
+        { "target": "intel", "what": "300mm silicon wafers" },
+        { "target": "micron", "what": "300mm silicon wafers for DRAM" },
+        { "target": "sk-hynix", "what": "300mm silicon wafers for DRAM/HBM" }
+      ],
+      "website": "https://www.sumcosi.com/english/",
+      "productUrl": "https://www.sumcosi.com/english/products/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/24/Seavansn.jpg",
+      "imageCredit": "Yamaguchi Yoshiaki / Wikimedia Commons (CC BY-SA 2.0) - SEAVANS, Minato-ku, SUMCO head office",
+      "logoDomain": "sumcosi.com"
+    },
+    {
+      "id": "globalwafers",
+      "name": "GlobalWafers Co., Ltd.",
+      "tier": "materials",
+      "role": "Taiwan's silicon wafer maker, roughly the world's third largest",
+      "description": "GlobalWafers, spun out of Sino-American Silicon and headquartered in Hsinchu, is the largest non-Japanese wafer supplier with about 17% of the silicon wafer market and 18 plants across nine countries. Its 2016 purchase of SunEdison Semiconductor (the old MEMC) gave it a US footprint, and in 2025 it opened a $3.5bn 300mm fab in Sherman, Texas - the first new advanced silicon wafer plant built in the United States in more than twenty years - with a further $4bn of US expansion announced. That matters because until Sherman, essentially no leading-edge 300mm wafers were made on American soil.",
+      "bottleneck": false,
+      "hq": { "city": "Hsinchu", "country": "Taiwan", "lat": 24.78, "lng": 120.99 },
+      "facilities": [
+        { "name": "Sherman 300mm fab", "city": "Sherman, Texas", "country": "United States", "lat": 33.64, "lng": -96.61, "note": "$3.5bn 300mm wafer fab, opened 2025" },
+        { "name": "St. Peters site (ex-MEMC)", "city": "St. Peters, Missouri", "country": "United States", "lat": 38.79, "lng": -90.63, "note": "US silicon operations and R&D" },
+        { "name": "Zhunan plant", "city": "Zhunan, Miaoli", "country": "Taiwan", "lat": 24.69, "lng": 120.87, "note": "Taiwan wafer manufacturing" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "300mm silicon wafers" },
+        { "target": "intel", "what": "300mm silicon wafers" },
+        { "target": "micron", "what": "300mm silicon wafers" },
+        { "target": "globalfoundries", "what": "silicon wafers" },
+        { "target": "samsung-foundry", "what": "silicon wafers" }
+      ],
+      "website": "https://www.sas-globalwafers.com/en/",
+      "productUrl": "https://www.sas-globalwafers.com/en/product/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/3/38/Single-crystal_silicon_boule.jpg",
+      "imageCredit": "Sebastian Wallroth / Wikimedia Commons (public domain) - single-crystal silicon boule",
+      "logoDomain": "sas-globalwafers.com"
+    },
+    {
+      "id": "siltronic",
+      "name": "Siltronic AG",
+      "tier": "materials",
+      "role": "Europe's 300mm silicon wafer producer",
+      "description": "Siltronic, spun out of Wacker Chemie and headquartered in Munich, is the only significant Western European maker of hyperpure silicon wafers and roughly the world's fourth largest. Its story starts with the first high-purity silicon crystal pulled at Burghausen in 1953; today it pulls crystals and polishes wafers up to 300mm at Burghausen and Freiberg in Germany, Portland in the US, and Singapore. Its largest capacity is in Singapore, where the new FabNext plant in the Tampines Wafer Fab Park was inaugurated in 2024 and brought epitaxial wafer capability to the island for the first time. Together with Shin-Etsu, SUMCO, GlobalWafers and SK Siltron, the top five suppliers control over 80% of global 300mm capacity.",
+      "bottleneck": false,
+      "hq": { "city": "Munich", "country": "Germany", "lat": 48.14, "lng": 11.58 },
+      "facilities": [
+        { "name": "Burghausen site", "city": "Burghausen", "country": "Germany", "lat": 48.17, "lng": 12.83, "note": "Crystal pulling and 300mm wafers since 1953" },
+        { "name": "Freiberg site", "city": "Freiberg", "country": "Germany", "lat": 50.92, "lng": 13.34, "note": "Wafer manufacturing" },
+        { "name": "FabNext", "city": "Singapore", "country": "Singapore", "lat": 1.36, "lng": 103.95, "note": "New 300mm fab with epitaxy, inaugurated 2024" }
+      ],
+      "suppliesTo": [
+        { "target": "intel", "what": "300mm silicon wafers" },
+        { "target": "globalfoundries", "what": "300mm silicon wafers" },
+        { "target": "tsmc", "what": "300mm silicon wafers" },
+        { "target": "micron", "what": "300mm silicon wafers" }
+      ],
+      "website": "https://www.siltronic.com/en/",
+      "productUrl": "https://www.siltronic.com/en/products.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Siliziumwafer.JPG",
+      "imageCredit": "Hebbe / Wikimedia Commons (public domain) - bare silicon wafers",
+      "logoDomain": "siltronic.com"
+    },
+    {
+      "id": "jsr",
+      "name": "JSR Corporation",
+      "tier": "materials",
+      "role": "The world's largest photoresist maker, including EUV and metal-oxide resists",
+      "description": "JSR - once Japan Synthetic Rubber, a 1957 state-founded synthetic rubber company - is now the world's biggest photoresist supplier with roughly 27% of the market. Photoresist is the light-sensitive polymer that actually records the pattern an ASML scanner projects; nothing gets printed without it. JSR's 2021 acquisition of Oregon-based Inpria gave it the leading metal-oxide EUV resist, a chemistry many believe is required for High-NA EUV, and it runs its EUV resist development next to imec in Leuven, Belgium. In 2024 the Japanese state-backed fund JIC took JSR private in a $6.4bn deal explicitly aimed at keeping this material under Japanese control; JSR is now building its first Taiwanese photoresist plant to sit next to TSMC.",
+      "bottleneck": true,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.66, "lng": 139.76 },
+      "facilities": [
+        { "name": "Yokkaichi Plant", "city": "Yokkaichi, Mie", "country": "Japan", "lat": 34.95, "lng": 136.63, "note": "Photoresist production and Fine Electronic Materials Development Center" },
+        { "name": "JSR Micro N.V.", "city": "Leuven", "country": "Belgium", "lat": 50.86, "lng": 4.68, "note": "EUV resist development beside imec" },
+        { "name": "Inpria", "city": "Corvallis, Oregon", "country": "United States", "lat": 44.57, "lng": -123.28, "note": "Metal-oxide EUV resist" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "ArF/EUV photoresists and lithography materials" },
+        { "target": "samsung-foundry", "what": "photoresists" },
+        { "target": "intel", "what": "photoresists incl. EUV" },
+        { "target": "sk-hynix", "what": "EUV photoresist (joint development)" },
+        { "target": "micron", "what": "photoresists" }
+      ],
+      "website": "https://www.jsr.co.jp/jsr_e/",
+      "productUrl": "https://www.jsr.co.jp/jsr_e/products/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Shiodome_Sumitomo_Building_2007.JPG",
+      "imageCredit": "Itoshin87 / Wikimedia Commons (CC BY-SA 3.0) - Shiodome Sumitomo Building, JSR head office",
+      "logoDomain": "jsr.co.jp"
+    },
+    {
+      "id": "tok",
+      "name": "Tokyo Ohka Kogyo Co., Ltd. (TOK)",
+      "tier": "materials",
+      "role": "Photoresists and lithography chemicals, from legacy nodes to EUV",
+      "description": "Founded in 1940 and based in Kawasaki, TOK is one of a handful of Japanese chemical houses that between them supply the overwhelming majority of the world's photoresist. It covers the full range - i-line and KrF for legacy automotive and analogue chips, ArF immersion, and EUV resists for leading-edge logic and DRAM - alongside developers, strippers and other wet chemistry. Its Sagami Operation Center in Samukawa, Kanagawa is the R&D hub and main resist plant. TOK is not a strict monopoly (JSR, Shin-Etsu, Sumitomo and Fujifilm compete), but the concentration of photoresist supply in a few Japanese sites is itself one of the industry's quieter single points of failure.",
+      "bottleneck": false,
+      "hq": { "city": "Kawasaki, Kanagawa", "country": "Japan", "lat": 35.57, "lng": 139.66 },
+      "facilities": [
+        { "name": "Sagami Operation Center", "city": "Samukawa, Kanagawa", "country": "Japan", "lat": 35.38, "lng": 139.39, "note": "Main photoresist plant and R&D hub" },
+        { "name": "TOK America", "city": "Hillsboro, Oregon", "country": "United States", "lat": 45.53, "lng": -122.92, "note": "US resist supply and support" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "photoresists incl. EUV and ArF immersion" },
+        { "target": "samsung-foundry", "what": "photoresists" },
+        { "target": "intel", "what": "photoresists" },
+        { "target": "micron", "what": "photoresists for DRAM" }
+      ],
+      "website": "https://www.tok.co.jp/eng/",
+      "productUrl": "https://www.tok.co.jp/eng/products/semiconductor-pre",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/b/be/Tokyo_Ohka_Kogyo_headquarter.jpg",
+      "imageCredit": "Wikimedia Commons (CC BY 3.0) - TOK headquarters",
+      "logoDomain": "tok.co.jp"
+    },
+    {
+      "id": "air-liquide",
+      "name": "Air Liquide S.A.",
+      "tier": "materials",
+      "role": "Ultra-high-purity bulk and specialty gases piped straight into fabs",
+      "description": "A fab is, among other things, an enormous gas consumer: nitrogen to purge every chamber, hydrogen and helium for EUV and cooling, and dozens of exotic specialty gases and precursors for deposition, etch and doping. Air Liquide, founded in Paris in 1902, is one of two companies that can build, own and operate the on-site air separation and specialty gas plants that a leading-edge fab needs, and it runs its electronics division out of Tokyo to sit close to Asian customers. It signed long-term supply agreements for TSMC's Arizona site and for the semiconductor cluster around Dresden. Purity is measured in parts per billion; a contaminated gas line can scrap an entire lot.",
+      "bottleneck": false,
+      "hq": { "city": "Paris", "country": "France", "lat": 48.86, "lng": 2.31 },
+      "facilities": [
+        { "name": "Air Liquide Electronics division HQ", "city": "Tokyo", "country": "Japan", "lat": 35.68, "lng": 139.77, "note": "Global electronics business management" },
+        { "name": "Arizona on-site gas plants", "city": "Phoenix, Arizona", "country": "United States", "lat": 33.75, "lng": -112.10, "note": "Ultra-high-purity supply to TSMC Arizona" },
+        { "name": "Dresden nitrogen plants", "city": "Dresden", "country": "Germany", "lat": 51.13, "lng": 13.72, "note": "On-site supply for the Saxon fab cluster" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "ultra-high-purity bulk gases, specialty gases and precursors" },
+        { "target": "intel", "what": "ultra-high-purity gases and advanced materials" },
+        { "target": "samsung-foundry", "what": "electronic specialty gases" },
+        { "target": "micron", "what": "electronic specialty gases" },
+        { "target": "globalfoundries", "what": "on-site industrial and specialty gases" }
+      ],
+      "website": "https://www.airliquide.com/",
+      "productUrl": "https://electronics.airliquide.com/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Air_liquide_headquarters.jpg",
+      "imageCredit": "BobVillars / Wikimedia Commons (CC0)",
+      "logoDomain": "airliquide.com"
+    },
+    {
+      "id": "linde",
+      "name": "Linde plc",
+      "tier": "materials",
+      "role": "Industrial and electronic specialty gases, on-site air separation units for fabs",
+      "description": "Linde - the 2018 merger of Germany's Linde AG and America's Praxair, now with executive offices in Woking, UK - is the other half of the electronics gas duopoly with Air Liquide. It builds, owns and operates air separation units next to fabs to deliver ultra-high-purity nitrogen, oxygen, argon and hydrogen by pipeline, plus the specialty gas mixtures used in deposition, etch, doping and chamber cleaning. In 2026 it committed roughly $1bn to expand its Phoenix on-site complex with two more SPECTRA air separation units on top of the three already there, its largest electronics investment anywhere, and about $800m more through its Taiwanese joint venture Linde LienHwa.",
+      "bottleneck": false,
+      "hq": { "city": "Woking", "country": "United Kingdom", "lat": 51.32, "lng": -0.56 },
+      "facilities": [
+        { "name": "Phoenix on-site gases complex", "city": "Phoenix, Arizona", "country": "United States", "lat": 33.75, "lng": -112.10, "note": "5 air separation units serving Arizona fabs; ~$1bn expansion" },
+        { "name": "Linde LienHwa", "city": "Taipei", "country": "Taiwan", "lat": 25.03, "lng": 121.56, "note": "JV supplying Taiwanese fabs and advanced packaging sites" },
+        { "name": "Americas corporate office", "city": "Danbury, Connecticut", "country": "United States", "lat": 41.40, "lng": -73.45, "note": "Former Praxair headquarters" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "on-site ultra-high-purity bulk gases and specialty gases" },
+        { "target": "intel", "what": "on-site industrial and electronic specialty gases" },
+        { "target": "samsung-foundry", "what": "electronic specialty gases" },
+        { "target": "micron", "what": "electronic specialty gases" }
+      ],
+      "website": "https://www.linde.com/",
+      "productUrl": "https://www.linde-gas.com/industries/electronics",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/BOC_plant%2C_Scunthorpe_-_geograph.org.uk_-_831349.jpg",
+      "imageCredit": "Paul Harrop / Wikimedia Commons (CC BY-SA 2.0) - BOC (Linde) air separation plant",
+      "logoDomain": "linde.com"
+    },
+    {
+      "id": "hoya",
+      "name": "HOYA Corporation",
+      "tier": "materials",
+      "role": "EUV and optical mask blanks - the defect-free substrates every chip pattern is written onto",
+      "description": "Before a pattern can be printed onto a wafer it has to exist on a photomask, and that mask starts as a blank: an ultra-flat low-thermal-expansion glass substrate coated with a 40-plus-layer molybdenum/silicon multilayer that reflects EUV light. Hoya, better known for eyeglass lenses and endoscopes, is one of only two companies on Earth (with AGC) that can make EUV mask blanks at production quality - estimates of Hoya's EUV share range from about a third to over 75% depending on the survey, but the duopoly itself is undisputed. A single killer defect in that multilayer stack ruins a mask that can cost hundreds of thousands of dollars. Hoya makes its EUV blanks in Japan and announced roughly $400m to expand capacity, with a high-volume EUV blank line planned for Singapore.",
+      "bottleneck": true,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.72, "lng": 139.69 },
+      "facilities": [
+        { "name": "Hachioji Plant", "city": "Hachioji, Tokyo", "country": "Japan", "lat": 35.66, "lng": 139.32, "note": "Photomask/mask blank production since 1983" },
+        { "name": "Akishima Plant and R&D Center", "city": "Akishima, Tokyo", "country": "Japan", "lat": 35.71, "lng": 139.35, "note": "Mask blank R&D and manufacturing" },
+        { "name": "Singapore site", "city": "Singapore", "country": "Singapore", "lat": 1.35, "lng": 103.83, "note": "Advanced optical blanks; EUV blank line planned" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "EUV and ArF mask blanks" },
+        { "target": "samsung-foundry", "what": "EUV mask blanks" },
+        { "target": "intel", "what": "EUV mask blanks" },
+        { "target": "sk-hynix", "what": "mask blanks for DRAM lithography" }
+      ],
+      "website": "https://www.hoya.com/en/",
+      "productUrl": "https://www.hoya.com/en/business/informationtechnology/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/6/60/Hoya_corp_head_office_nakaochiai_shinjuku.JPG",
+      "imageCredit": "User:Kentin / Wikimedia Commons (CC BY-SA 3.0)",
+      "logoDomain": "hoya.com"
+    },
+    {
+      "id": "tanaka",
+      "name": "TANAKA Precious Metals (Tanaka Kikinzoku Kogyo)",
+      "tier": "materials",
+      "role": "Gold, copper and silver bonding wire that connects a die to its package",
+      "description": "Tanaka has been refining precious metals in Tokyo since 1885 and drew its first ultra-fine gold bonding wire in 1964. Bonding wire is the hair-thin conductor that stitches a chip die to its package leads - critical for the stacked memory dies inside DRAM and HBM modules, where wires only a few microns across have to be looped tens of thousands of times without a single break. Tanaka is the largest single supplier, with roughly a quarter to a third of the market by length, and together with Germany's Heraeus accounts for over 40% of world supply. Bonding wire is made by its TANAKA Denshi Kogyo arm in Yoshinogari, Saga, with plants in Singapore, Malaysia, China and Taiwan.",
+      "bottleneck": false,
+      "hq": { "city": "Tokyo", "country": "Japan", "lat": 35.68, "lng": 139.76 },
+      "facilities": [
+        { "name": "TANAKA Denshi Kogyo (bonding wire)", "city": "Yoshinogari, Saga", "country": "Japan", "lat": 33.32, "lng": 130.39, "note": "Sole Japanese bonding-wire plant" },
+        { "name": "Isehara Plant", "city": "Isehara, Kanagawa", "country": "Japan", "lat": 35.40, "lng": 139.31, "note": "Precious metal refining and processing" },
+        { "name": "Kaohsiung plant", "city": "Kaohsiung", "country": "Taiwan", "lat": 22.63, "lng": 120.30, "note": "Bonding wire for Taiwanese packaging houses" }
+      ],
+      "suppliesTo": [
+        { "target": "sk-hynix", "what": "bonding wire for DRAM and HBM stacks" },
+        { "target": "samsung-memory", "what": "bonding wire for memory packaging" },
+        { "target": "micron", "what": "bonding wire for DRAM packaging" },
+        { "target": "ase", "what": "gold/copper bonding wire for assembly and test" },
+        { "target": "amkor", "what": "gold/copper bonding wire for assembly and test" }
+      ],
+      "website": "https://tanaka-preciousmetals.com/en/",
+      "productUrl": "https://tanaka-preciousmetals.com/en/products/bonding_wires/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/27/Tanaka_Kikinzoku_Kogyo_K.K._Tsukuba_Technical_Center.JPG",
+      "imageCredit": "Miyuki Meinaka / Wikimedia Commons (CC BY-SA 3.0)",
+      "logoDomain": "tanaka-preciousmetals.com"
+    }
+  ]
+}

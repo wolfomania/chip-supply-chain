@@ -1,0 +1,211 @@
+.app {
+  min-block-size: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Masthead ---------------------------------------------------------------- */
+
+.masthead {
+  background: var(--paper-2);
+  border-block-end: 1px solid var(--line);
+  /* A faint tier gradient hairline: the whole chain, compressed to 3px. */
+  box-shadow: inset 0 3px 0 0 transparent;
+  position: relative;
+}
+
+.masthead::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 3px;
+  background: linear-gradient(
+    to right,
+    var(--tier-raw-materials),
+    var(--tier-materials),
+    var(--tier-equipment-suppliers),
+    var(--tier-equipment),
+    var(--tier-eda),
+    var(--tier-fabs),
+    var(--tier-memory),
+    var(--tier-packaging),
+    var(--tier-designers)
+  );
+}
+
+.masthead__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding-block: var(--space-10) var(--space-8);
+}
+
+.masthead__text {
+  max-inline-size: 58ch;
+}
+
+.masthead__title {
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  font-variation-settings: 'SOFT' 0, 'WONK' 0;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+  color: var(--ink);
+}
+
+.masthead__standfirst {
+  margin-block-start: var(--space-4);
+  font-size: var(--text-md);
+  line-height: var(--leading-relaxed);
+  color: var(--ink-2);
+}
+
+.masthead__credit {
+  margin-block-start: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.01em;
+  color: var(--ink-3);
+}
+
+.masthead__credit cite {
+  font-style: normal;
+  color: var(--ink-2);
+}
+
+.masthead__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-6);
+  padding-inline-start: var(--space-6);
+  border-inline-start: 1px solid var(--line);
+}
+
+.masthead__stats dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--ink-4);
+  white-space: nowrap;
+}
+
+.masthead__stats dd {
+  margin-block-start: 0.15em;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tabs -------------------------------------------------------------------- */
+
+.tabs {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 30;
+  /* Opaque on purpose: a backdrop-filter here escapes the detail panel's
+     scrim in Chromium and leaves the bar looking un-dimmed. */
+  background: var(--paper);
+  border-block-end: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(46, 38, 27, 0.02);
+}
+
+.tabs__inner {
+  display: flex;
+  gap: var(--space-1);
+  min-block-size: var(--header-h);
+  align-items: stretch;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding-inline: var(--space-4);
+  color: var(--ink-3);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border-block-end: 2px solid transparent;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.tab:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.tab.is-active {
+  color: var(--ink);
+  border-block-end-color: var(--accent);
+}
+
+.tab .icon {
+  inline-size: 1rem;
+  block-size: 1rem;
+  color: currentColor;
+  opacity: 0.75;
+}
+
+.tab.is-active .icon {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.tab__hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+@media (max-width: 640px) {
+  .tab__hint {
+    display: none;
+  }
+  .masthead__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-inline-start: 0;
+    border-inline-start: none;
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--line);
+    inline-size: 100%;
+  }
+}
+
+/* Main / footer ----------------------------------------------------------- */
+
+main {
+  flex: 1 1 auto;
+}
+
+.site-foot {
+  border-block-start: 1px solid var(--line);
+  background: var(--paper-2);
+}
+
+.site-foot__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-8);
+  justify-content: space-between;
+  padding-block: var(--space-8);
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.site-foot__inner p {
+  max-inline-size: 70ch;
+}
+
+.site-foot__note {
+  font-family: var(--font-mono);
+  color: var(--ink-4);
+}
