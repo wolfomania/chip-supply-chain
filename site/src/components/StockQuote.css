@@ -1,0 +1,227 @@
+/* Share price block inside the detail panel. Reads as a figure in a print
+   feature, not a trading terminal: one number, one line, one caption. */
+
+.stock {
+  --move: var(--ink-3);
+  --move-soft: color-mix(in oklab, var(--ink-3) 8%, transparent);
+}
+
+.stock[data-dir='up'] {
+  --move: var(--up-ink);
+  --move-soft: color-mix(in oklab, var(--up) 14%, transparent);
+}
+
+.stock[data-dir='down'] {
+  --move: var(--down-ink);
+  --move-soft: color-mix(in oklab, var(--down) 14%, transparent);
+}
+
+/* A stale series stays legible while the next range lands. */
+.stock.is-stale .stock__headline,
+.stock.is-stale .stock__spark {
+  opacity: 0.45;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.stock__unlisted {
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+}
+
+/* Identity ---------------------------------------------------------------- */
+
+.stock__ident {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.55em;
+}
+
+.stock__ticker {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  padding: 0.15em 0.45em;
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+}
+
+.stock__exchange {
+  font-size: var(--text-xs);
+  color: var(--ink-3);
+}
+
+.stock__ccy {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+.stock__via {
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--ink-4);
+}
+
+/* Headline ---------------------------------------------------------------- */
+
+.stock__headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2em 0.6em;
+  margin-block-start: var(--space-1);
+}
+
+.stock__price {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.stock__change {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--move);
+  font-variant-numeric: tabular-nums;
+}
+
+.stock__window {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.03em;
+  color: var(--ink-4);
+}
+
+/* Sparkline --------------------------------------------------------------- */
+
+.stock__spark {
+  inline-size: 100%;
+  block-size: auto;
+  margin-block-start: var(--space-1);
+  overflow: visible;
+}
+
+.stock__spark-stop-a {
+  stop-color: var(--move-soft);
+}
+
+.stock__spark-stop-b {
+  stop-color: transparent;
+}
+
+.stock__spark-line {
+  fill: none;
+  stroke: color-mix(in oklab, var(--move) 80%, var(--ink));
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.stock__spark-base {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.stock__spark-dot {
+  fill: var(--move);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+/* Ranges ------------------------------------------------------------------ */
+
+.stock__ranges {
+  display: flex;
+  gap: var(--space-1);
+  margin-block-start: var(--space-1);
+}
+
+.stock__range {
+  flex: 1 1 0;
+  padding: 0.35em 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  color: var(--ink-3);
+  background: var(--surface-sunken);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.stock__range:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+
+.stock__range.is-active {
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border-color: color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+.stock__caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.02em;
+  color: var(--ink-4);
+}
+
+/* Loading / error --------------------------------------------------------- */
+
+.stock__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-block-start: var(--space-1);
+}
+
+.stock__skeleton-line,
+.stock__skeleton-chart {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--surface-sunken), var(--paper-2), var(--surface-sunken));
+  background-size: 200% 100%;
+  animation: stock-shimmer 1.6s var(--ease-in-out) infinite;
+}
+
+.stock__skeleton-line {
+  inline-size: 9rem;
+  block-size: 1.6rem;
+}
+
+.stock__skeleton-chart {
+  block-size: 5.2rem;
+}
+
+@keyframes stock-shimmer {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+
+.stock__error {
+  margin-block-start: var(--space-1);
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--ink-3);
+  background: var(--surface-sunken);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+}

@@ -27,6 +27,14 @@
   --accent-ink: #8e3f24;
   --accent-soft: color-mix(in oklab, var(--accent) 10%, var(--paper));
 
+  /* ---------- Market movement (share price up / down) ----------
+     Deliberately not ticker-green and ticker-red: a pine and a brick that sit
+     inside the same warm family as the tier palette. */
+  --up: #3f7d5a;
+  --down: #a9482f;
+  --up-ink: color-mix(in oklab, var(--up) 82%, var(--ink));
+  --down-ink: color-mix(in oklab, var(--down) 82%, var(--ink));
+
   /* ---------- Alert (bottleneck / sole-supplier) ---------- */
   --alert: #b8442c;
   --alert-ink: #8c3320;

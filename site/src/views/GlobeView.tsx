@@ -28,7 +28,7 @@ import './GlobeView.css';
  *             in src/assets (Natural Earth 110m via world-atlas, ~185 kB,
  *             emitted as an asset and fetched from our own origin)
  *   arcs      one per supply edge, HQ → HQ, source-tier → target-tier gradient
- *   points    one bar per HQ (tall) and per facility (short)
+ *   objects   one flat disc per site — the atlas dots, see below
  *   rings     pulse on the selected company's sites
  */
 
@@ -54,6 +54,65 @@ const ATMOSPHERE = '#a8c2dd';
 /** Land floats a hair above the sphere so the two never z-fight. */
 const LAND_ALTITUDE = 0.004;
 
+/* ---- site markers --------------------------------------------------------
+   Atlas dots: every site is a flat circle lying on the map, exactly the way a
+   printed reference map marks a city. They have no extruded height at all, so
+   they read as clean circles from any camera angle instead of the tilted 3D
+   pills that a cylinder gives you at a grazing view.
+
+   An HQ gets a paper-toned halo under its dot — a slightly wider disc showing
+   as a ring — so the colour separates from the arcs and country borders it
+   lands on. A facility is a smaller plain dot, no halo.                     */
+
+/** Radii, in degrees of arc on the sphere. */
+const HQ_DOT_DEG = 0.42;
+const FACILITY_DOT_DEG = 0.26;
+/** How far the halo extends past the HQ dot it sits under. */
+const HALO_RING_DEG = 0.14;
+/** The selected company's sites grow by this much. */
+const SELECTED_DOT_SCALE = 1.5;
+
+/** --paper, a step lighter than LAND, so the halo reads over land and sea alike. */
+const HALO_COLOR = '#faf8f4';
+
+/* Altitudes in globe radii. Land caps sit at LAND_ALTITUDE; each marker layer
+   gets its own shelf clear of them and of each other. The discs additionally
+   render with depthWrite off and an explicit paint order (below), so where two
+   of them do overlap the winner is fixed rather than decided by the depth
+   buffer — no flicker as the camera moves. */
+const HALO_ALTITUDE = 0.009;
+const DOT_ALTITUDE = 0.0105;
+const RING_ALTITUDE = 0.0135;
+
+/** Paint order: every halo before every dot, then one slot per disc. */
+const HALO_ORDER = 10;
+const DOT_ORDER = 1000;
+/** Clear of any per-disc slot, so the selected company always paints on top. */
+const SELECTED_ORDER = 500;
+
+/* ---- fanning out co-located sites ----------------------------------------
+   Ten headquarters share the south bay, and central Tokyo holds a similar
+   crowd; drawn as authored they land on the same pixel, so all you see is
+   whichever one happened to be painted last. Sites within CLUSTER_DEG of each
+   other are therefore grouped and dealt out onto concentric rings around
+   their shared centroid — a rosette, one dot per site, all of them legible.
+
+   Only the rendered coordinates move: tooltips still name the true city, and
+   the camera still flies to the real HQ. The displacement is a couple of
+   degrees at most, which is well inside the "one dot for a metro area"
+   fiction this map already trades in.                                      */
+
+/** Sites closer than this (degrees, longitude corrected for latitude) are one place. */
+const CLUSTER_DEG = 0.45;
+/** Centre-to-centre gap between neighbouring dots in a rosette. */
+const FAN_SPACING_DEG = 1.15;
+/** No dot is ever thrown further than this from its true position. */
+const FAN_MAX_DEG = 1.9;
+
+const DEG = Math.PI / 180;
+/** three-globe draws on a fixed radius-100 sphere; one degree of arc is this many units. */
+const UNITS_PER_DEG = (2 * Math.PI * 100) / 360;
+
 /**
  * Antarctica ships as two features, tagged by `properties.role`.
  *
@@ -78,10 +137,14 @@ interface CountryFeature {
   geometry: object;
 }
 
-/** The two async pieces of the base map, revealed together. */
+/**
+ * The async pieces of the base map, revealed together — plus the three module
+ * itself, which the marker layer needs synchronously to build its discs.
+ */
 interface BaseMap {
   material: Material;
   countries: CountryFeature[];
+  three: typeof import('three');
 }
 
 type SiteKind = 'hq' | 'facility';
@@ -101,6 +164,20 @@ interface SitePoint {
   detail: string;
   place: string;
   bottleneck: boolean;
+}
+
+/** One flat disc on the map: a site's coloured dot, or the halo beneath an HQ. */
+interface SiteDisc {
+  site: SitePoint;
+  lat: number;
+  lng: number;
+  altitude: number;
+  /** Degrees of arc. */
+  radius: number;
+  hex: string;
+  alpha: number;
+  /** three.js renderOrder — see the altitude note above. */
+  order: number;
 }
 
 interface SupplyArc {
@@ -172,6 +249,116 @@ function buildPoints(companies: Company[]): SitePoint[] {
   return points;
 }
 
+/** Shortest signed distance from `b` to `a` in degrees of longitude. */
+function lngDelta(a: number, b: number): number {
+  return ((a - b + 540) % 360) - 180;
+}
+
+/** A degree of longitude is shorter than a degree of latitude away from the equator. */
+function lngScale(lat: number): number {
+  return Math.max(0.15, Math.cos(lat * DEG));
+}
+
+/**
+ * Polar offsets for the `n` sites of one cluster: concentric rings holding 6,
+ * 12, 18… dots, which is roughly how circles pack, with alternate rings
+ * staggered by half a step so the outer dots sit in the inner gaps.
+ *
+ * Ring one contracts for small clusters — a pair ends up one spacing apart
+ * rather than two — and the whole rosette is squeezed if its outermost ring
+ * would otherwise reach past FAN_MAX_DEG.
+ */
+function fanSlots(n: number): { r: number; a: number }[] {
+  const perRing: number[] = [];
+  for (let left = n, ring = 1; left > 0; ring++) {
+    const take = Math.min(left, 6 * ring);
+    perRing.push(take);
+    left -= take;
+  }
+
+  const slots: { r: number; a: number }[] = [];
+  perRing.forEach((count, i) => {
+    const r =
+      i === 0
+        ? Math.min(FAN_SPACING_DEG, FAN_SPACING_DEG / (2 * Math.sin(Math.PI / Math.max(count, 2))))
+        : FAN_SPACING_DEG * (i + 1);
+    const offset = (i % 2) * (Math.PI / count);
+    for (let j = 0; j < count; j++) slots.push({ r, a: offset + (j / count) * 2 * Math.PI });
+  });
+
+  const outermost = slots[slots.length - 1].r;
+  if (outermost > FAN_MAX_DEG) {
+    const squeeze = FAN_MAX_DEG / outermost;
+    for (const slot of slots) slot.r *= squeeze;
+  }
+
+  return slots;
+}
+
+/**
+ * Rosette seating order: headquarters first, then facilities, then by id.
+ *
+ * Slots come out innermost-first, so this keeps the haloed HQ dots — the ones
+ * the arcs attach to — nearest their true position, and pushes the smaller
+ * facility dots to the outer ring. Reads as a hierarchy, and is stable.
+ */
+function fanOrder(p: SitePoint): string {
+  return `${p.kind === 'hq' ? 0 : 1}|${p.companyId}|${p.id}`;
+}
+
+/**
+ * Group sites that share a place and deal each group onto a rosette.
+ *
+ * Greedy, seeded on the first member in id order, so the layout is identical
+ * on every render and every reload. Singletons are returned untouched; only
+ * the lat/lng of clustered sites change, never their labels.
+ */
+function fanOutCoLocated(points: SitePoint[]): SitePoint[] {
+  const seeded = [...points].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const clusters: { lat: number; lng: number; members: SitePoint[] }[] = [];
+
+  for (const point of seeded) {
+    const home = clusters.find((cluster) => {
+      const dLat = cluster.lat - point.lat;
+      const dLng = lngDelta(cluster.lng, point.lng) * lngScale(cluster.lat);
+      return dLat * dLat + dLng * dLng <= CLUSTER_DEG * CLUSTER_DEG;
+    });
+    if (home) home.members.push(point);
+    else clusters.push({ lat: point.lat, lng: point.lng, members: [point] });
+  }
+
+  const fanned: SitePoint[] = [];
+
+  for (const cluster of clusters) {
+    const n = cluster.members.length;
+    if (n === 1) {
+      fanned.push(cluster.members[0]);
+      continue;
+    }
+
+    // Centroid, measured relative to the seed so the antimeridian is a non-event.
+    const lat = cluster.members.reduce((sum, m) => sum + m.lat, 0) / n;
+    const lng =
+      cluster.lng + cluster.members.reduce((sum, m) => sum + lngDelta(m.lng, cluster.lng), 0) / n;
+
+    const slots = fanSlots(n);
+    const scale = lngScale(lat);
+
+    [...cluster.members]
+      .sort((a, b) => fanOrder(a).localeCompare(fanOrder(b)))
+      .forEach((member, i) => {
+        const { r, a } = slots[i];
+        fanned.push({
+          ...member,
+          lat: Math.max(-89, Math.min(89, lat + r * Math.sin(a))),
+          lng: lng + (r * Math.cos(a)) / scale,
+        });
+      });
+  }
+
+  return fanned;
+}
+
 export function GlobeView({ companies, edges, selectedId, onSelectCompany }: ViewProps) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const globeRef = useRef<GlobeMethods | undefined>(undefined);
@@ -200,7 +387,11 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
 
     void Promise.all([import('three'), loadCountries]).then(([three, countries]) => {
       if (!alive) return;
-      setBaseMap({ material: new three.MeshLambertMaterial({ color: OCEAN }), countries });
+      setBaseMap({
+        material: new three.MeshLambertMaterial({ color: OCEAN }),
+        countries,
+        three,
+      });
     });
 
     return () => {
@@ -212,29 +403,39 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
 
   const hqByCompany = useMemo(() => new Map(companies.map((c) => [c.id, c])), [companies]);
 
-  const allPoints = useMemo(() => buildPoints(companies), [companies]);
+  // Fanned once, off the full set: hiding a tier must not reshuffle the layout.
+  const allPoints = useMemo(() => fanOutCoLocated(buildPoints(companies)), [companies]);
+
+  /** Where each HQ dot actually got drawn — arcs have to land on the dot, not the city. */
+  const hqPlacement = useMemo(() => {
+    const placed = new Map<string, SitePoint>();
+    for (const point of allPoints) if (point.kind === 'hq') placed.set(point.companyId, point);
+    return placed;
+  }, [allPoints]);
 
   const allArcs = useMemo<SupplyArc[]>(() => {
     const out: SupplyArc[] = [];
     for (const edge of edges) {
       const source = hqByCompany.get(edge.source);
       const target = hqByCompany.get(edge.target);
-      if (!source || !target) continue;
+      const from = hqPlacement.get(edge.source);
+      const to = hqPlacement.get(edge.target);
+      if (!source || !target || !from || !to) continue;
       out.push({
         id: edge.id,
         source: edge.source,
         target: edge.target,
         sourceTier: edge.sourceTier,
         targetTier: edge.targetTier,
-        startLat: source.hq.lat,
-        startLng: source.hq.lng,
-        endLat: target.hq.lat,
-        endLng: target.hq.lng,
+        startLat: from.lat,
+        startLng: from.lng,
+        endLat: to.lat,
+        endLng: to.lng,
         label: `${source.name} → ${target.name}${edge.what ? ` · ${edge.what}` : ''}`,
       });
     }
     return out;
-  }, [edges, hqByCompany]);
+  }, [edges, hqByCompany, hqPlacement]);
 
   /** Tiers present in the data, in chain order, with a site count each. */
   const legend = useMemo(() => {
@@ -261,6 +462,53 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
     () => (selectedId ? points.filter((p) => p.companyId === selectedId) : []),
     [points, selectedId],
   );
+
+  /**
+   * The drawn discs: a halo then a dot for each HQ, a dot for each facility.
+   * Rebuilt whenever the selection or the tier filter changes, which is what
+   * repaints the layer — the objects layer reads appearance at creation.
+   */
+  const discs = useMemo<SiteDisc[]>(() => {
+    const out: SiteDisc[] = [];
+
+    points.forEach((site, i) => {
+      const hq = site.kind === 'hq';
+      const chosen = selectedId != null && site.companyId === selectedId;
+      const scale = chosen ? SELECTED_DOT_SCALE : 1;
+      const radius = (hq ? HQ_DOT_DEG : FACILITY_DOT_DEG) * scale;
+      const alpha =
+        selectedId == null ? (hq ? 0.94 : 0.78) : chosen ? 1 : hq ? 0.4 : 0.28;
+      const slot = i + (chosen ? SELECTED_ORDER : 0);
+
+      if (hq) {
+        out.push({
+          site,
+          lat: site.lat,
+          lng: site.lng,
+          altitude: HALO_ALTITUDE,
+          radius: radius + HALO_RING_DEG * scale,
+          hex: HALO_COLOR,
+          // The halo fades with its dot, or a dimmed company would keep a
+          // bright white ring and read as the loud one.
+          alpha: alpha * 0.92,
+          order: HALO_ORDER + slot,
+        });
+      }
+
+      out.push({
+        site,
+        lat: site.lat,
+        lng: site.lng,
+        altitude: DOT_ALTITUDE,
+        radius,
+        hex: site.color,
+        alpha,
+        order: DOT_ORDER + slot,
+      });
+    });
+
+    return out;
+  }, [points, selectedId]);
 
   /* ---- sizing ------------------------------------------------------------ */
 
@@ -345,10 +593,40 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
 
   /* ---- accessors --------------------------------------------------------- */
 
-  const isSelected = useCallback((p: SitePoint) => p.companyId === selectedId, [selectedId]);
+  /**
+   * One flat circle, tangent to the sphere. The objects layer positions and
+   * orients it — a CircleGeometry faces straight out with no rotation of our
+   * own — so all this has to settle is size, colour and paint order.
+   *
+   * Geometry and material are per-disc rather than shared: three-globe
+   * disposes both when an object leaves the layer, which would pull the rug
+   * from under any cached copy. A few hundred 48-gons is nothing, and three
+   * caches the shader program across identical materials anyway.
+   */
+  const discObject = useMemo(() => {
+    if (!baseMap) return undefined;
+    const { CircleGeometry, DoubleSide, Mesh, MeshBasicMaterial } = baseMap.three;
 
-  const pointLabel = useCallback((obj: object) => {
-    const p = obj as SitePoint;
+    return (obj: object) => {
+      const disc = obj as SiteDisc;
+      const mesh = new Mesh(
+        new CircleGeometry(1, 48),
+        new MeshBasicMaterial({
+          color: disc.hex,
+          transparent: true,
+          opacity: disc.alpha,
+          side: DoubleSide,
+          depthWrite: false,
+        }),
+      );
+      mesh.scale.setScalar(disc.radius * UNITS_PER_DEG);
+      mesh.renderOrder = disc.order;
+      return mesh;
+    };
+  }, [baseMap]);
+
+  const discLabel = useCallback((obj: object) => {
+    const p = (obj as SiteDisc).site;
     const kind = p.kind === 'hq' ? 'Headquarters' : 'Facility';
     return `
       <div class="globe-tip" style="--tip-accent:${p.color}">
@@ -365,33 +643,6 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
     const a = obj as SupplyArc;
     return `<div class="globe-tip globe-tip--arc"><span class="globe-tip__detail">${escapeHtml(a.label)}</span></div>`;
   }, []);
-
-  const pointColor = useCallback(
-    (obj: object) => {
-      const p = obj as SitePoint;
-      if (!selectedId) return rgba(p.color, p.kind === 'hq' ? 0.94 : 0.78);
-      return isSelected(p) ? rgba(p.color, 1) : rgba(p.color, p.kind === 'hq' ? 0.4 : 0.28);
-    },
-    [selectedId, isSelected],
-  );
-
-  const pointRadius = useCallback(
-    (obj: object) => {
-      const p = obj as SitePoint;
-      const base = p.kind === 'hq' ? 0.62 : 0.38;
-      return isSelected(p) ? base * 1.7 : base;
-    },
-    [isSelected],
-  );
-
-  const pointAltitude = useCallback(
-    (obj: object) => {
-      const p = obj as SitePoint;
-      const base = p.kind === 'hq' ? 0.05 : 0.02;
-      return isSelected(p) ? base + 0.06 : base;
-    },
-    [isSelected],
-  );
 
   const arcColor = useCallback(
     (obj: object) => {
@@ -415,10 +666,11 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
     [selectedId],
   );
 
-  const handlePointClick = useCallback(
+  // Halo and dot both carry their site, so the ring is as clickable as the ink.
+  const handleDiscClick = useCallback(
     (obj: object) => {
       setInteracted(true);
-      onSelectCompany((obj as SitePoint).companyId);
+      onSelectCompany((obj as SiteDisc).site.companyId);
     },
     [onSelectCompany],
   );
@@ -507,18 +759,14 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
               polygonAltitude={LAND_ALTITUDE}
               polygonCapCurvatureResolution={3}
               polygonsTransitionDuration={0}
-              /* points */
-              pointsData={points}
-              pointLat="lat"
-              pointLng="lng"
-              pointColor={pointColor}
-              pointRadius={pointRadius}
-              pointAltitude={pointAltitude}
-              pointResolution={16}
-              pointsMerge={false}
-              pointsTransitionDuration={300}
-              pointLabel={pointLabel}
-              onPointClick={handlePointClick}
+              /* sites — flat atlas dots lying on the map */
+              objectsData={discs}
+              objectLat="lat"
+              objectLng="lng"
+              objectAltitude="altitude"
+              objectThreeObject={discObject}
+              objectLabel={discLabel}
+              onObjectClick={handleDiscClick}
               /* arcs */
               arcsData={arcs}
               arcStartLat="startLat"
@@ -540,6 +788,7 @@ export function GlobeView({ companies, edges, selectedId, onSelectCompany }: Vie
               ringsData={rings}
               ringLat="lat"
               ringLng="lng"
+              ringAltitude={RING_ALTITUDE}
               ringColor={ringColor}
               ringMaxRadius={3.2}
               ringPropagationSpeed={1.6}

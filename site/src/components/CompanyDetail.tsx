@@ -4,6 +4,7 @@ import { TIER_LABEL } from '../data/tiers';
 import { CompanyLogo } from './CompanyLogo';
 import { BottleneckChip, TierBadge } from './Chips';
 import { RemoteImage } from './RemoteImage';
+import { StockQuote } from './StockQuote';
 import { ArrowLeft, ArrowRight, ExternalLink, PinIcon } from './icons';
 import './CompanyDetail.css';
 
@@ -57,6 +58,8 @@ export function CompanyDetail({ company, onSelectCompany }: CompanyDetailProps) 
       <RemoteImage src={imageUrl} alt={name} credit={imageCredit} ratio="16 / 9" />
 
       <p className="detail__desc">{description}</p>
+
+      <StockQuote company={company} />
 
       <section className="detail__section">
         <h3 className="eyebrow">Headquarters</h3>
