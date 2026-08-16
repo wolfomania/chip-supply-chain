@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { Company } from '../data/types';
 import { isListed, listingFor, type Listing } from '../data/stocks/listings';
 import {
@@ -78,11 +78,14 @@ type Load =
 function StockBlock({ listing, companyName }: { listing: Listing; companyName: string }) {
   const [range, setRange] = useState<StockRange>(DEFAULT_RANGE);
   const [load, setLoad] = useState<Load>({ status: 'loading', series: null });
+  /** The point under the cursor on the chart, if any — it takes over the headline. */
+  const [hover, setHover] = useState<StockPoint | null>(null);
 
   useEffect(() => {
     const ac = new AbortController();
     // Keep the previous series on screen (dimmed) while a new range loads.
     setLoad((prev) => ({ status: 'loading', series: prev.series }));
+    setHover(null);
 
     fetchStockSeries(listing.symbol, range, ac.signal)
       .then((series) => setLoad({ status: 'ready', series }))
@@ -95,6 +98,9 @@ function StockBlock({ listing, companyName }: { listing: Listing; companyName: s
 
   const series = load.series;
   const move = useMemo(() => (series ? measure(series) : null), [series]);
+  // Hovering the chart retargets the headline at that point; the section keeps
+  // the whole-window direction, so the chart's own colour never flickers.
+  const view = move ? (hover ? delta(hover.c, move.base) : move) : null;
   const tab = STOCK_RANGES.find((r) => r.id === range);
   // Yahoo's currency is authoritative; the mapping's is the fallback before it lands.
   const cash = money(series?.currency || listing.currency);
@@ -118,18 +124,23 @@ function StockBlock({ listing, companyName }: { listing: Listing; companyName: s
       </div>
       {via ? <p className="stock__via">{via}</p> : null}
 
-      {move && series ? (
+      {move && view && series ? (
         <>
           <p className="stock__headline">
-            <span className="stock__price">{cash.price.format(move.last.c)}</span>
-            <span className="stock__change">
-              {move.sign}
-              {cash.delta.format(Math.abs(move.change))} ({move.sign}
-              {PERCENT.format(Math.abs(move.pct))}%)
+            <span className="stock__price">{cash.price.format((hover ?? move.last).c)}</span>
+            <span className="stock__change" data-dir={view.dir}>
+              {view.sign}
+              {cash.delta.format(Math.abs(view.change))} ({view.sign}
+              {PERCENT.format(Math.abs(view.pct))}%)
             </span>
             <span className="stock__window">{tab?.blurb}</span>
           </p>
-          <Sparkline points={series.points} baseline={move.base} />
+          <Sparkline
+            points={series.points}
+            baseline={move.base}
+            format={cash.price.format}
+            onHover={setHover}
+          />
         </>
       ) : load.status === 'error' ? (
         <p className="stock__error">Price data unavailable right now.</p>
@@ -155,36 +166,40 @@ function StockBlock({ listing, companyName }: { listing: Listing; companyName: s
       </div>
 
       <p className="stock__caption">
-        Prices delayed up to a day{move ? ` · as of ${asOf(move.last.t, range)}` : ''}
+        Prices delayed up to a day{move ? ` · as of ${stamp(move.last.t, range === '1d')}` : ''}
       </p>
     </section>
   );
 }
 
-interface Move {
-  last: StockPoint;
-  /** Close the change is measured from: the pre-window close, or the first point. */
-  base: number;
+interface Delta {
   change: number;
   pct: number;
   dir: 'up' | 'down' | 'flat';
   sign: string;
 }
 
-function measure(series: StockSeries): Move {
-  const last = series.points[series.points.length - 1];
-  const base = series.previousClose ?? series.points[0].c;
-  const change = last.c - base;
+interface Move extends Delta {
+  last: StockPoint;
+  /** Close the change is measured from: the pre-window close, or the first point. */
+  base: number;
+}
+
+/** One close against the baseline — used for the last point and for hovered ones. */
+function delta(value: number, base: number): Delta {
+  const change = value - base;
   const pct = base === 0 ? 0 : (change / base) * 100;
   // Anything under half a cent of movement reads as flat, not as a rounded 0.00 up.
   const dir = change > 0.005 ? 'up' : change < -0.005 ? 'down' : 'flat';
 
-  return { last, base, change, pct, dir, sign: dir === 'up' ? '+' : dir === 'down' ? '−' : '' };
+  return { change, pct, dir, sign: dir === 'up' ? '+' : dir === 'down' ? '−' : '' };
 }
 
-function asOf(epochSeconds: number, range: StockRange): string {
-  const d = new Date(epochSeconds * 1000);
-  return range === '1d' ? `${DAY.format(d)}, ${TIME.format(d)}` : DAY.format(d);
+function measure(series: StockSeries): Move {
+  const last = series.points[series.points.length - 1];
+  const base = series.previousClose ?? series.points[0].c;
+
+  return { last, base, ...delta(last.c, base) };
 }
 
 /* Sparkline ---------------------------------------------------------------- */
@@ -200,10 +215,24 @@ const X_END = W - 9;
  * baseline the change above is measured against, so the reader can see at a
  * glance which side of it the line spends its time on.
  */
-function Sparkline({ points, baseline }: { points: StockPoint[]; baseline: number }) {
+function Sparkline({
+  points,
+  baseline,
+  format,
+  onHover,
+}: {
+  points: StockPoint[];
+  baseline: number;
+  /** Price formatter for the hover label — the currency's own, from the block. */
+  format: (value: number) => string;
+  onHover: (point: StockPoint | null) => void;
+}) {
   const gradientId = useId();
+  const boxRef = useRef<HTMLDivElement>(null);
+  const tipRef = useRef<HTMLDivElement>(null);
+  const [at, setAt] = useState<number | null>(null);
 
-  const { line, area, base, dot } = useMemo(() => {
+  const { line, area, base, dot, xs, ys, intraday } = useMemo(() => {
     const values = points.map((p) => p.c);
     const lo = Math.min(baseline, ...values);
     const hi = Math.max(baseline, ...values);
@@ -211,31 +240,118 @@ function Sparkline({ points, baseline }: { points: StockPoint[]; baseline: numbe
 
     const x = (i: number) => (points.length === 1 ? X_END / 2 : (i / (points.length - 1)) * X_END);
     const y = (v: number) => PAD + (1 - (v - lo) / span) * (H - PAD * 2);
-    const at = (i: number) => `${x(i).toFixed(1)},${y(points[i].c).toFixed(1)}`;
 
-    const d = points.map((_, i) => at(i)).join('L');
+    const xs = points.map((_, i) => x(i));
+    const ys = points.map((p) => y(p.c));
+    const d = points.map((_, i) => `${xs[i].toFixed(1)},${ys[i].toFixed(1)}`).join('L');
     const last = points.length - 1;
+    // Candle spacing, not the range tab, decides whether a stamp needs a clock:
+    // 1D comes back at 5-minute bars, every other range at one point per day.
+    const step = last > 0 ? (points[last].t - points[0].t) / last : Infinity;
 
     return {
       line: `M${d}`,
-      area: `M${d}L${x(last).toFixed(1)},${H}L${x(0).toFixed(1)},${H}Z`,
+      area: `M${d}L${xs[last].toFixed(1)},${H}L${xs[0].toFixed(1)},${H}Z`,
       base: y(baseline),
-      dot: { cx: x(last), cy: y(points[last].c) },
+      dot: { cx: xs[last], cy: ys[last] },
+      xs,
+      ys,
+      intraday: step < 12 * 3600,
     };
   }, [points, baseline]);
 
+  // A new series arrives under a cursor that never moved: drop the stale marker.
+  useEffect(() => setAt(null), [points]);
+
+  const cursor = at !== null && at < points.length ? at : null;
+
+  // Keep the label inside the plot: centred on the point until an edge is near,
+  // then pinned flush to it. Written straight to the node — measuring the label
+  // and re-rendering for it would double the work on every pointer move.
+  useLayoutEffect(() => {
+    const tip = tipRef.current;
+    const box = boxRef.current;
+    if (!tip || !box || cursor === null) return;
+
+    const width = box.clientWidth;
+    const centre = (xs[cursor] / W) * width;
+    tip.style.left = `${Math.min(Math.max(centre - tip.offsetWidth / 2, 0), Math.max(width - tip.offsetWidth, 0))}px`;
+  }, [cursor, xs]);
+
+  /** Nearest point to the pointer, in the SVG's own coordinates. */
+  function locate(clientX: number) {
+    const box = boxRef.current;
+    if (!box) return;
+
+    const rect = box.getBoundingClientRect();
+    if (rect.width === 0) return;
+
+    const px = ((clientX - rect.left) / rect.width) * W;
+    let best = 0;
+    for (let i = 1; i < xs.length; i++) {
+      if (Math.abs(xs[i] - px) < Math.abs(xs[best] - px)) best = i;
+    }
+
+    if (best !== cursor) {
+      setAt(best);
+      onHover(points[best]);
+    }
+  }
+
+  function clear() {
+    setAt(null);
+    onHover(null);
+  }
+
   return (
-    <svg className="stock__spark" viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
-      <defs>
-        <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" className="stock__spark-stop-a" />
-          <stop offset="100%" className="stock__spark-stop-b" />
-        </linearGradient>
-      </defs>
-      <path className="stock__spark-area" d={area} fill={`url(#${gradientId})`} />
-      <line className="stock__spark-base" x1="0" y1={base} x2={W} y2={base} />
-      <path className="stock__spark-line" d={line} />
-      <circle className="stock__spark-dot" cx={dot.cx} cy={dot.cy} r="3.4" />
-    </svg>
+    <div
+      className="stock__chart"
+      ref={boxRef}
+      onPointerDown={(e) => locate(e.clientX)}
+      onPointerMove={(e) => locate(e.clientX)}
+      onPointerLeave={clear}
+      onPointerCancel={clear}
+      // A finger has nowhere to rest: lifting it ends the scrub.
+      onPointerUp={(e) => {
+        if (e.pointerType !== 'mouse') clear();
+      }}
+    >
+      <svg className="stock__spark" viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" className="stock__spark-stop-a" />
+            <stop offset="100%" className="stock__spark-stop-b" />
+          </linearGradient>
+        </defs>
+        <path className="stock__spark-area" d={area} fill={`url(#${gradientId})`} />
+        <line className="stock__spark-base" x1="0" y1={base} x2={W} y2={base} />
+        {cursor !== null ? (
+          <line className="stock__spark-cross" x1={xs[cursor]} y1="0" x2={xs[cursor]} y2={H} />
+        ) : null}
+        <path className="stock__spark-line" d={line} />
+        <circle className="stock__spark-dot" cx={dot.cx} cy={dot.cy} r="3.4" />
+        {cursor !== null ? (
+          <circle className="stock__spark-mark" cx={xs[cursor]} cy={ys[cursor]} r="4" />
+        ) : null}
+      </svg>
+
+      {cursor !== null ? (
+        <div
+          className="stock__tip"
+          ref={tipRef}
+          // The label sits on the empty half of the box, away from the point.
+          data-side={ys[cursor] < H / 2 ? 'bottom' : 'top'}
+          aria-hidden="true"
+        >
+          <span className="stock__tip-price">{format(points[cursor].c)}</span>
+          <span className="stock__tip-when">{stamp(points[cursor].t, intraday)}</span>
+        </div>
+      ) : null}
+    </div>
   );
+}
+
+function stamp(epochSeconds: number, intraday: boolean): string {
+  const d = new Date(epochSeconds * 1000);
+  return intraday ? `${DAY.format(d)}, ${TIME.format(d)}` : DAY.format(d);
 }

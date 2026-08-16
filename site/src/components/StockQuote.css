@@ -95,6 +95,20 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Hovering the chart can point the headline at a move the window as a whole
+   didn't make, so this one number carries its own direction. */
+.stock__change[data-dir='up'] {
+  color: var(--up-ink);
+}
+
+.stock__change[data-dir='down'] {
+  color: var(--down-ink);
+}
+
+.stock__change[data-dir='flat'] {
+  color: var(--ink-3);
+}
+
 .stock__window {
   font-family: var(--font-mono);
   font-size: var(--text-2xs);
@@ -104,10 +118,19 @@
 
 /* Sparkline --------------------------------------------------------------- */
 
+/* Wrapper, not the SVG, takes the pointer: the hover label is HTML, so it keeps
+   the panel's type sizes instead of scaling with the viewBox. */
+.stock__chart {
+  position: relative;
+  margin-block-start: var(--space-1);
+  /* A finger dragging sideways scrubs the line; dragging down still scrolls. */
+  touch-action: pan-y;
+}
+
 .stock__spark {
+  display: block;
   inline-size: 100%;
   block-size: auto;
-  margin-block-start: var(--space-1);
   overflow: visible;
 }
 
@@ -137,6 +160,56 @@
   fill: var(--move);
   stroke: var(--surface);
   stroke-width: 2;
+}
+
+/* Hover ------------------------------------------------------------------- */
+
+.stock__spark-cross {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+
+.stock__spark-mark {
+  fill: var(--move);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.stock__tip {
+  position: absolute;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  padding: 0.3em 0.5em;
+  white-space: nowrap;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+}
+
+.stock__tip[data-side='top'] {
+  inset-block-start: 0;
+}
+
+.stock__tip[data-side='bottom'] {
+  inset-block-end: 0;
+}
+
+.stock__tip-price {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.stock__tip-when {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.02em;
+  color: var(--ink-4);
 }
 
 /* Ranges ------------------------------------------------------------------ */
