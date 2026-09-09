@@ -1,0 +1,108 @@
+/* Flow view — column diagram with an SVG edge layer underneath HTML node buttons. */
+
+.flow-scroller {
+  overflow-x: auto;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.flow-canvas {
+  position: relative;
+  min-width: 1060px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(130px, 1fr));
+  gap: 0 26px;
+  align-items: start;
+  padding: 6px 2px 14px;
+}
+
+.flow-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.flow-edges .edge {
+  fill: none;
+  stroke-width: 1.4;
+  opacity: 0.13;
+  transition: opacity var(--transition), stroke-width var(--transition);
+}
+.flow-edges .edge-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 9;
+  pointer-events: stroke;
+}
+
+/* Tracing states */
+.flow-canvas.tracing .edge { opacity: 0.035; }
+.flow-canvas.tracing .edge.lit { opacity: 0.85; stroke-width: 2.2; }
+.flow-canvas.tracing .flow-node { opacity: 0.38; }
+.flow-canvas.tracing .flow-node.lit { opacity: 1; }
+.flow-canvas.tracing .flow-node.origin {
+  box-shadow: 0 0 0 2px var(--node-color, var(--accent)), var(--shadow-soft);
+}
+
+.flow-col { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 14px; }
+
+.flow-group { display: flex; flex-direction: column; gap: 5px; }
+.flow-group-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--group-color, var(--ink-faint));
+  margin-bottom: 3px;
+  border-bottom: 2px solid var(--group-color, var(--line));
+  padding-bottom: 3px;
+}
+
+.flow-node {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  text-align: left;
+  padding: 5px 8px;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--node-color, var(--accent));
+  background: var(--bg-raised);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-soft);
+  transition: opacity var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.flow-node:hover { transform: translateX(2px); border-color: var(--node-color); }
+.flow-node .choke {
+  color: var(--node-color, var(--accent));
+  font-size: 0.7rem;
+  margin-left: auto;
+}
+.flow-node.dimmed { opacity: 0.25; }
+.flow-node.selected {
+  box-shadow: 0 0 0 2px var(--node-color, var(--accent)), var(--shadow-soft);
+}
+
+/* Logistics band spans the whole grid below the columns */
+.flow-logistics {
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 1;
+  margin-top: 26px;
+  border-top: 1px dashed var(--stage-logistics);
+  padding-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+}
+.flow-logistics .flow-group-title {
+  width: 100%;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.flow-logistics .flow-node { width: auto; min-width: 150px; }

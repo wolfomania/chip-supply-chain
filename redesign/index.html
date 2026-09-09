@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chip Supply Chain Explorer — Flow, Map, Companies</title>
+  <meta name="description" content="Explore the global semiconductor supply chain: how 47 key companies move silicon from raw quartz to finished AI chips, where they operate, and who depends on whom." />
+  <meta name="theme-color" content="#f6efe3" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='4' width='24' height='24' rx='5' fill='%23c05b2e'/%3E%3Crect x='11' y='11' width='10' height='10' rx='2' fill='%23f6efe3'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/flow.css" />
+  <link rel="stylesheet" href="css/map.css" />
+  <link rel="stylesheet" href="css/companies.css" />
+  <link rel="stylesheet" href="css/detail.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="masthead">
+      <h1>Chip Supply Chain Explorer</h1>
+      <p class="tagline">From one quartz mine to the finished GPU — <span id="company-count">47</span> companies the world's chips depend on.</p>
+    </div>
+
+    <div class="controls" role="search">
+      <input id="search" type="search" placeholder="Search companies…" autocomplete="off"
+             aria-label="Search companies by name" />
+      <select id="country-filter" aria-label="Filter by country">
+        <option value="">All countries</option>
+      </select>
+      <button id="clear-filters" class="clear-btn" hidden>Clear filters</button>
+    </div>
+
+    <nav class="stage-chips" aria-label="Filter by supply chain stage"></nav>
+
+    <nav class="view-tabs" role="tablist" aria-label="Views">
+      <button role="tab" id="tab-flow" data-view="flow" aria-controls="view-flow">Flow</button>
+      <button role="tab" id="tab-map" data-view="map" aria-controls="view-map">Map</button>
+      <button role="tab" id="tab-companies" data-view="companies" aria-controls="view-companies">Companies</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section id="view-flow" role="tabpanel" aria-labelledby="tab-flow" hidden>
+      <div class="view-intro">
+        <p>Follow the chain left to right: raw inputs become materials, machines print and cut,
+        foundries fabricate, packagers assemble, designers ship. Lines are supplier → customer
+        relationships — hover or select a company to trace its dependencies.
+        <span class="legend-choke"><span class="choke-mark" aria-hidden="true">◆</span> marks a chokepoint: an effectively sole or dominant supplier.</span></p>
+      </div>
+      <div class="flow-scroller">
+        <div id="flow-canvas" class="flow-canvas" aria-label="Supply chain flow diagram">
+          <p class="loading-note">Loading supply chain…</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-map" role="tabpanel" aria-labelledby="tab-map" hidden>
+      <div class="view-intro">
+        <p>Headquarters of every company in the chain. The clusters are the story: a handful of
+        regions hold the world's chip-making capability. Select a company to see its key
+        facilities too.</p>
+      </div>
+      <div class="map-wrap">
+        <div id="map-canvas" class="map-canvas">
+          <p class="loading-note">Loading map…</p>
+        </div>
+        <aside id="country-list" class="country-list" aria-label="Companies per country"></aside>
+      </div>
+    </section>
+
+    <section id="view-companies" role="tabpanel" aria-labelledby="tab-companies" hidden>
+      <p id="result-count" class="result-count" role="status"></p>
+      <div id="company-grid" class="company-grid">
+        <p class="loading-note">Loading companies…</p>
+      </div>
+    </section>
+  </main>
+
+  <aside id="detail-panel" class="detail-panel" role="dialog" aria-modal="false"
+         aria-labelledby="detail-title" hidden></aside>
+  <div id="tooltip" class="tooltip" role="status" hidden></div>
+
+  <footer class="site-footer">
+    <p>A static research snapshot — company facts, links and stock listings come from a fixed
+    dataset and are not live. Nothing here is investment advice.</p>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

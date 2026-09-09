@@ -1,0 +1,108 @@
+/* Header, tabs, filters, footer — the app shell. */
+
+.site-header {
+  padding: 22px clamp(14px, 3vw, 36px) 0;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(rgb(253 248 238 / 0.65), transparent);
+}
+
+.masthead h1 {
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  letter-spacing: 0.01em;
+}
+.masthead h1::first-letter { color: var(--accent); }
+.tagline {
+  color: var(--ink-soft);
+  margin: 4px 0 16px;
+  max-width: 62ch;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.controls input[type="search"] { flex: 1 1 220px; max-width: 340px; }
+.clear-btn { color: var(--accent-ink); }
+
+/* Stage chips, ordered like the chain itself */
+.stage-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.stage-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-raised);
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.stage-chip .dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--chip-color, var(--accent));
+}
+.stage-chip .count { color: var(--ink-faint); font-size: 0.78rem; }
+.stage-chip:hover { border-color: var(--chip-color); color: var(--ink); }
+.stage-chip[aria-pressed="true"] {
+  background: var(--chip-soft, var(--accent-soft));
+  border-color: var(--chip-color, var(--accent));
+  color: var(--chip-dark, var(--ink));
+}
+.chip-arrow { color: var(--line-strong); user-select: none; }
+
+/* View tabs */
+.view-tabs {
+  display: flex;
+  gap: 2px;
+}
+.view-tabs [role="tab"] {
+  border: 1px solid var(--line);
+  border-bottom: none;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 9px 22px;
+  background: var(--bg-sunken);
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.view-tabs [role="tab"][aria-selected="true"] {
+  background: var(--bg-raised);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 -2px 0 var(--accent) inset;
+}
+
+main {
+  padding: clamp(14px, 3vw, 36px);
+  min-height: 60vh;
+}
+
+.view-intro {
+  max-width: 72ch;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+.legend-choke { white-space: nowrap; }
+.choke-mark { color: var(--accent); }
+
+.result-count { color: var(--ink-faint); margin-bottom: 12px; }
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint);
+  font-size: 0.82rem;
+  padding: 18px clamp(14px, 3vw, 36px) 26px;
+}
+
+@media (max-width: 640px) {
+  .view-tabs [role="tab"] { flex: 1; padding: 9px 8px; text-align: center; }
+}

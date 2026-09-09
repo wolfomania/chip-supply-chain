@@ -1,0 +1,249 @@
+{
+  "companies": [
+    {
+      "id": "cadence",
+      "name": "Cadence Design Systems, Inc.",
+      "tier": "eda",
+      "role": "Electronic design automation software: the tools chip designers use to lay out, simulate and sign off billion-transistor designs",
+      "description": "Cadence writes the software that turns a chip idea into a manufacturable layout: digital synthesis and place-and-route, custom/analog design (Virtuoso), circuit simulation (Spectre), and multiphysics signoff. Together with Synopsys it forms a duopoly at the leading edge — the Big Three EDA vendors hold over 85% of the market, and Cadence alone booked $5.30bn of revenue in 2025. Licences are sold as opaque, individually negotiated annual subscriptions; published estimates put commercial node-locked seats anywhere from roughly $50k to $500k per year, and fabless designers spend $80k–$150k per engineer annually once tools, IP and verification are added up. In May 2025 the US Commerce Department told Cadence that exporting its EDA software to China required a licence — a restriction rescinded roughly six weeks later in July 2025 as part of a trade truce.",
+      "bottleneck": true,
+      "hq": { "city": "San Jose", "country": "United States", "lat": 37.37, "lng": -121.93 },
+      "facilities": [
+        { "name": "Cadence India (Noida)", "city": "Noida", "country": "India", "lat": 28.58, "lng": 77.32, "note": "Largest R&D site outside the US" },
+        { "name": "Cadence Bengaluru R&D", "city": "Bengaluru", "country": "India", "lat": 12.97, "lng": 77.59, "note": "Digital and verification engineering" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "digital implementation, verification and analog/custom design tools" },
+        { "target": "amd", "what": "place-and-route, signoff and multiphysics analysis tools" },
+        { "target": "apple", "what": "custom/analog (Virtuoso) and digital design flows for Apple silicon" },
+        { "target": "broadcom", "what": "design and verification tools plus interface IP for custom ASICs" },
+        { "target": "qualcomm", "what": "implementation, simulation and verification tool flows" },
+        { "target": "intel", "what": "EDA tool flows for internal chip design teams" },
+        { "target": "tsmc", "what": "node-certified reference flows and PDK-qualified tools (OIP program)" }
+      ],
+      "website": "https://www.cadence.com/",
+      "productUrl": "https://www.cadence.com/en_US/home/tools/digital-design-and-signoff.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/CadenceHQ.jpg/1280px-CadenceHQ.jpg",
+      "imageCredit": "Cadence / Wikimedia Commons, CC BY-SA 3.0",
+      "logoDomain": "cadence.com"
+    },
+    {
+      "id": "synopsys",
+      "name": "Synopsys, Inc.",
+      "tier": "eda",
+      "role": "Electronic design automation software and semiconductor IP: the other half of the EDA duopoly",
+      "description": "Synopsys supplies the front end of chip design — RTL synthesis (Design Compiler), simulation (VCS), timing signoff (PrimeTime) — plus the largest catalogue of licensable silicon IP. Its grip at advanced nodes is extreme: Design Compiler holds an estimated 84–85% of synthesis at 7nm and below, and PrimeTime over 90% of timing signoff, on revenue of roughly $7.0bn in 2025. Switching away is effectively impossible mid-project, because a design team would have to rebuild its entire verified pipeline on tools nobody's tape-outs have been trusted to. Like Cadence, it is a US company, and it suspended financial guidance in May 2025 when Washington briefly required export licences for EDA sales to China before reversing course that July.",
+      "bottleneck": true,
+      "hq": { "city": "Sunnyvale", "country": "United States", "lat": 37.38, "lng": -122.03 },
+      "facilities": [
+        { "name": "Synopsys Armenia", "city": "Yerevan", "country": "Armenia", "lat": 40.18, "lng": 44.51, "note": "~1,000 engineers; one of Armenia's largest tech employers" },
+        { "name": "Synopsys India", "city": "Bengaluru", "country": "India", "lat": 12.97, "lng": 77.59, "note": "Tools and IP development" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "synthesis, simulation and timing-signoff tools plus interface IP" },
+        { "target": "amd", "what": "RTL-to-signoff tool flow and high-speed SerDes/controller IP" },
+        { "target": "apple", "what": "verification and signoff tools used across Apple silicon design" },
+        { "target": "broadcom", "what": "EDA flow and licensable IP for custom accelerator ASICs" },
+        { "target": "qualcomm", "what": "design, verification and signoff tools for Snapdragon SoCs" },
+        { "target": "intel", "what": "EDA tools and IP for internal design teams" },
+        { "target": "tsmc", "what": "process-certified design flows and PDK-qualified signoff tools" }
+      ],
+      "website": "https://www.synopsys.com/",
+      "productUrl": "https://www.synopsys.com/implementation-and-signoff.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/675_Almanor_Avenue.jpg/1280px-675_Almanor_Avenue.jpg",
+      "imageCredit": "Coolcaesar / Wikimedia Commons, CC BY 4.0",
+      "logoDomain": "synopsys.com"
+    },
+    {
+      "id": "nvidia",
+      "name": "NVIDIA Corporation",
+      "tier": "designers",
+      "role": "Fabless designer of the GPUs and AI accelerators that anchor the data-centre buildout",
+      "description": "NVIDIA designs chips and sells systems but owns no fabs — every wafer is made by TSMC and packaged on TSMC's CoWoS lines with SK hynix HBM stacks bonded alongside. Its Blackwell generation is the top-performance part this chain feeds: 208 billion transistors on a custom TSMC 4NP process, built as two reticle-limited dies stitched together by a 10 TB/s link and presented to software as one GPU. The GB200 NVL72 rack wires 72 of those GPUs to 36 Grace CPUs into a single liquid-cooled unit. NVIDIA sits at the far end of the supply chain — a design house whose product cannot exist without Dutch lithography, Japanese ceramics and substrate film, Korean memory and Taiwanese packaging.",
+      "bottleneck": true,
+      "hq": { "city": "Santa Clara", "country": "United States", "lat": 37.37, "lng": -121.97 },
+      "facilities": [
+        { "name": "Endeavor & Voyager campus", "city": "Santa Clara", "country": "United States", "lat": 37.37, "lng": -121.97, "note": "Main GPU architecture and design campus" },
+        { "name": "NVIDIA Israel (ex-Mellanox)", "city": "Yokneam Illit", "country": "Israel", "lat": 32.66, "lng": 35.1, "note": "InfiniBand/Ethernet networking silicon for AI clusters" },
+        { "name": "NVIDIA Taiwan", "city": "Taipei", "country": "Taiwan", "lat": 25.1, "lng": 121.52, "note": "Co-location with TSMC and the AI server ODM ecosystem" }
+      ],
+      "suppliesTo": [],
+      "website": "https://www.nvidia.com/",
+      "productUrl": "https://www.nvidia.com/en-us/data-center/gb200-nvl72/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/NVIDIA_Headquarters.jpg/1280px-NVIDIA_Headquarters.jpg",
+      "imageCredit": "Coolcaesar / Wikimedia Commons, CC BY-SA 4.0",
+      "logoDomain": "nvidia.com"
+    },
+    {
+      "id": "amd",
+      "name": "Advanced Micro Devices, Inc.",
+      "tier": "designers",
+      "role": "Fabless designer of x86 CPUs, Instinct AI accelerators and adaptive/FPGA silicon",
+      "description": "AMD designs EPYC server CPUs, Ryzen client chips and Instinct data-centre GPUs, and has manufactured nothing itself since spinning out its fabs into GlobalFoundries in 2009. It pioneered mainstream chiplet packaging — splitting a processor into small compute dies on a leading-edge TSMC node plus a cheaper I/O die — which is now the standard way to beat the reticle limit. Like NVIDIA it depends on TSMC for wafers, on TSMC CoWoS for advanced packaging, and on HBM from SK hynix, Samsung and Micron for its accelerators. It is the only credible second source of high-end AI compute, which makes it structurally important even where its share is small.",
+      "bottleneck": false,
+      "hq": { "city": "Santa Clara", "country": "United States", "lat": 37.39, "lng": -121.98 },
+      "facilities": [
+        { "name": "Lone Star campus", "city": "Austin", "country": "United States", "lat": 30.39, "lng": -97.72, "note": "Largest AMD site; CPU design and validation" },
+        { "name": "Markham design centre", "city": "Markham", "country": "Canada", "lat": 43.86, "lng": -79.34, "note": "Graphics architecture, originally ATI" }
+      ],
+      "suppliesTo": [],
+      "website": "https://www.amd.com/",
+      "productUrl": "https://www.amd.com/en/products/accelerators/instinct.html",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/2485_Augustine_Drive_headquarters_in_Santa_Clara%2C_California.jpg/1280px-2485_Augustine_Drive_headquarters_in_Santa_Clara%2C_California.jpg",
+      "imageCredit": "Coolcaesar / Wikimedia Commons, CC BY-SA 4.0",
+      "logoDomain": "amd.com"
+    },
+    {
+      "id": "apple",
+      "name": "Apple Inc.",
+      "tier": "designers",
+      "role": "Fabless designer of the A-series and M-series SoCs inside its own products",
+      "description": "Apple designs its own application processors — the A-series for iPhone and the M-series for Mac, iPad and Vision Pro — and does not sell them to anyone else, which makes it the largest captive chip designer in the world. It is habitually TSMC's launch customer for each new node, buying out the initial capacity of the leading-edge process before anyone else can get on it. The M5, announced in October 2025, adds a Neural Accelerator inside every GPU core for on-device AI. Apple's volumes are what pay to ramp each generation of TSMC's most advanced fabs, so its ordering decisions ripple back down through wafers, substrates and packaging.",
+      "bottleneck": false,
+      "hq": { "city": "Cupertino", "country": "United States", "lat": 37.33, "lng": -122.01 },
+      "facilities": [
+        { "name": "Apple Silicon Design Center", "city": "Munich", "country": "Germany", "lat": 48.14, "lng": 11.57, "note": "Power management, RF and wireless silicon" },
+        { "name": "Apple Israel", "city": "Herzliya", "country": "Israel", "lat": 32.16, "lng": 34.84, "note": "Processor design centre" },
+        { "name": "Apple San Diego", "city": "San Diego", "country": "United States", "lat": 32.9, "lng": -117.2, "note": "Cellular modem engineering" }
+      ],
+      "suppliesTo": [],
+      "website": "https://www.apple.com/",
+      "productUrl": "https://www.apple.com/newsroom/2025/10/apple-unleashes-m5-the-next-big-leap-in-ai-performance-for-apple-silicon/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Aerial_view_of_Apple_Park_dllu.jpg/1280px-Aerial_view_of_Apple_Park_dllu.jpg",
+      "imageCredit": "Daniel L. Lu (user:dllu) / Wikimedia Commons, CC BY-SA 4.0",
+      "logoDomain": "apple.com"
+    },
+    {
+      "id": "broadcom",
+      "name": "Broadcom Inc.",
+      "tier": "designers",
+      "role": "Fabless designer of custom AI accelerators (XPUs), Ethernet switch silicon and networking/connectivity chips",
+      "description": "Broadcom is the quiet giant of the designer tier: it builds the custom accelerators that hyperscalers use instead of buying merchant GPUs, and the Tomahawk and Jericho switch chips that wire AI clusters together. Its custom-silicon business turns a customer's architecture into a real chip using Broadcom's SerDes, packaging and physical-design expertise, then hands it to TSMC to fabricate. That makes it a second, largely invisible demand channel pulling on exactly the same CoWoS packaging and HBM supply as NVIDIA. Broadcom also owns much of the world's Wi-Fi, broadband and enterprise-networking silicon.",
+      "bottleneck": false,
+      "hq": { "city": "Palo Alto", "country": "United States", "lat": 37.41, "lng": -122.14 },
+      "facilities": [
+        { "name": "San Jose campus", "city": "San Jose", "country": "United States", "lat": 37.41, "lng": -121.94, "note": "Networking and switch silicon engineering" },
+        { "name": "Fort Collins design centre", "city": "Fort Collins", "country": "United States", "lat": 40.55, "lng": -105.06, "note": "High-speed SerDes and custom ASIC design" }
+      ],
+      "suppliesTo": [],
+      "website": "https://www.broadcom.com/",
+      "productUrl": "https://www.broadcom.com/products/custom-silicon",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Broadcom_Headquarters_San_Jose.jpg/1280px-Broadcom_Headquarters_San_Jose.jpg",
+      "imageCredit": "Coolcaesar / Wikimedia Commons, CC BY-SA 4.0 (Broadcom's San Jose campus)",
+      "logoDomain": "broadcom.com"
+    },
+    {
+      "id": "qualcomm",
+      "name": "Qualcomm Incorporated",
+      "tier": "designers",
+      "role": "Fabless designer of Snapdragon mobile SoCs and the cellular modems in most premium phones",
+      "description": "Qualcomm designs the Snapdragon system-on-chip that powers most premium Android phones, plus the standalone 5G modems that even competitors buy, and licenses the underlying wireless patents on top. It has been fabless in practice for years, splitting leading-edge production between TSMC and Samsung Foundry depending on node and generation. Its Oryon CPU cores, acquired with Nuvia, pushed it into Windows laptops and automotive compute. Qualcomm is the reason a chip shortage shows up first in phones and cars rather than in data centres.",
+      "bottleneck": false,
+      "hq": { "city": "San Diego", "country": "United States", "lat": 32.9, "lng": -117.2 },
+      "facilities": [
+        { "name": "Qualcomm India design centre", "city": "Hyderabad", "country": "India", "lat": 17.45, "lng": 78.38, "note": "Modem and SoC engineering" },
+        { "name": "Qualcomm Cambridge", "city": "Cambridge", "country": "United Kingdom", "lat": 52.2, "lng": 0.13, "note": "Connectivity/Bluetooth silicon, originally CSR" }
+      ],
+      "suppliesTo": [],
+      "website": "https://www.qualcomm.com/",
+      "productUrl": "https://www.qualcomm.com/products/mobile/snapdragon",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Qualcomm_headquarters.jpg/1280px-Qualcomm_headquarters.jpg",
+      "imageCredit": "Coolcaesar / Wikimedia Commons, CC BY-SA 3.0",
+      "logoDomain": "qualcomm.com"
+    },
+    {
+      "id": "air-cargo-747",
+      "name": "EUV Airlift (Boeing 747 freighter charters)",
+      "tier": "logistics",
+      "role": "The chartered heavy-freight corridor that moves ASML EUV scanners from the Netherlands to fabs in Taiwan, Korea, Japan and the US",
+      "description": "An EUV scanner cannot be flown or driven in one piece, so ASML dismantles each machine and ships it as roughly 250 crates filling about 40 freight containers — around 20 trucks to the airport and three fully loaded Boeing 747 freighters per machine, followed by weeks of on-site reassembly by ASML engineers. A single scanner runs to about 180 tonnes and every leg has to be shock- and temperature-monitored, because a jolt in transit can cost months. The 747 nose door is what makes it possible at all: no other freighter in wide service swallows crates of that length. When the last 747 freighters retire, this corridor has no obvious replacement.",
+      "bottleneck": true,
+      "hq": { "city": "Veldhoven", "country": "Netherlands", "lat": 51.42, "lng": 5.4 },
+      "facilities": [
+        { "name": "Amsterdam Schiphol Airport", "city": "Amsterdam", "country": "Netherlands", "lat": 52.31, "lng": 4.76, "note": "Loading point for outbound scanner charters" },
+        { "name": "Taiwan Taoyuan International Airport", "city": "Taoyuan", "country": "Taiwan", "lat": 25.08, "lng": 121.23, "note": "Arrival gateway for TSMC-bound tools" },
+        { "name": "Phoenix-Mesa Gateway Airport", "city": "Mesa", "country": "United States", "lat": 33.31, "lng": -111.66, "note": "Dedicated semiconductor airfreight gateway for Arizona fabs" }
+      ],
+      "suppliesTo": [
+        { "target": "tsmc", "what": "ASML EUV scanner modules — ~250 crates / 3 Boeing 747 freighters per machine, Veldhoven to Hsinchu/Tainan and Arizona" },
+        { "target": "samsung-foundry", "what": "EUV and DUV scanner modules airfreighted to Korean fab sites" },
+        { "target": "intel", "what": "EUV and High-NA scanner modules airfreighted to Oregon, Arizona and Ireland" }
+      ],
+      "website": "https://www.asml.com/",
+      "productUrl": "https://www.asml.com/en/products/euv-lithography-systems",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Boeing_747-8F_Nose_cargo_door.jpg/1280px-Boeing_747-8F_Nose_cargo_door.jpg",
+      "imageCredit": "Olivier Cleynen / Wikimedia Commons, CC BY-SA 3.0",
+      "logoDomain": "asml.com"
+    },
+    {
+      "id": "dsv",
+      "name": "DSV A/S",
+      "tier": "logistics",
+      "role": "Danish freight forwarder with a dedicated semiconductor programme — chartered 747 freighters, tool-grade warehousing and fab-construction logistics",
+      "description": "DSV runs one of the few forwarding networks purpose-built for semiconductor capital equipment: white-glove handling, tarmac-approved ground staff, temperature-controlled high-security storage and specialised trucks for moving tools. In 2023 it opened the first airport hub dedicated to the semiconductor industry at Phoenix-Mesa Gateway, flying Boeing 747Fs operated by Atlas Air; Intel, ASML and TSMC were all named among the customers present at the opening. It also moves the mundane half of the problem — the structural steel, cleanroom modules and building materials that a new fab consumes for years before it makes a single wafer.",
+      "bottleneck": false,
+      "hq": { "city": "Hedehusene", "country": "Denmark", "lat": 55.65, "lng": 12.2 },
+      "facilities": [
+        { "name": "Phoenix-Mesa Gateway semiconductor air hub", "city": "Mesa", "country": "United States", "lat": 33.31, "lng": -111.66, "note": "Opened 2023; 747F service with Atlas Air for Arizona fabs" },
+        { "name": "DSV Air & Sea Netherlands", "city": "Venlo", "country": "Netherlands", "lat": 51.37, "lng": 6.17, "note": "European high-tech logistics campus near the ASML cluster" }
+      ],
+      "suppliesTo": [
+        { "target": "asml", "what": "airfreight forwarding and white-glove handling of lithography tools, modules and field spares" },
+        { "target": "tsmc", "what": "inbound tool and construction logistics for the Arizona fab build-out" },
+        { "target": "intel", "what": "semiconductor equipment and fab-construction freight into Arizona and Ohio" }
+      ],
+      "website": "https://www.dsv.com/",
+      "productUrl": "https://www.dsv.com/en-us/our-solutions/industry-solutions/tech-logistics/semicons",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/DSV_Hovedkontor.jpg/1280px-DSV_Hovedkontor.jpg",
+      "imageCredit": "Leif Jørgensen / Wikimedia Commons, CC BY-SA 4.0",
+      "logoDomain": "dsv.com"
+    },
+    {
+      "id": "china-airlines-cargo",
+      "name": "China Airlines Cargo",
+      "tier": "logistics",
+      "role": "Taiwan's largest freighter operator — flies finished chips and AI servers out of Taoyuan to the US and Europe",
+      "description": "Finished wafers and packaged chips are light, tiny and worth more per kilo than almost anything else moved by air, so essentially none of Taiwan's leading-edge output travels by sea. China Airlines Cargo runs a Boeing 747-400F and 777F freighter fleet out of Taoyuan and is the main scheduled lift for that traffic. AI hardware has reshaped its business: June 2025 cargo revenue hit NT$8.08bn, close to 50% up year on year and a three-year high, with transpacific rates at their highest since 2022. Anchorage remains the classic technical stop on the Taipei-to-US-heartland run.",
+      "bottleneck": false,
+      "hq": { "city": "Taoyuan", "country": "Taiwan", "lat": 25.08, "lng": 121.23 },
+      "facilities": [
+        { "name": "Taoyuan cargo terminal (TPE)", "city": "Taoyuan", "country": "Taiwan", "lat": 25.08, "lng": 121.23, "note": "Main freighter base and export gateway" },
+        { "name": "Anchorage transit hub (ANC)", "city": "Anchorage", "country": "United States", "lat": 61.17, "lng": -149.99, "note": "Transpacific technical stop and transfer point" },
+        { "name": "Los Angeles gateway (LAX)", "city": "Los Angeles", "country": "United States", "lat": 33.94, "lng": -118.41, "note": "US west-coast freighter gateway" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "transpacific airfreight of Blackwell GPU modules and assembled AI server racks out of Taoyuan" },
+        { "target": "amd", "what": "airfreight of finished accelerator and CPU packages from Taiwan to US customers" },
+        { "target": "apple", "what": "airfreight of finished Apple silicon and assembled devices from Asian assembly sites" }
+      ],
+      "website": "https://www.china-airlines.com/",
+      "productUrl": "https://cargo.china-airlines.com/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/China_Airlines_Cargo_Boeing_747-400F_B-18720_at_Taoyuan_February_2026_1.jpg/1280px-China_Airlines_Cargo_Boeing_747-400F_B-18720_at_Taoyuan_February_2026_1.jpg",
+      "imageCredit": "4300streetcar / Wikimedia Commons, CC BY 4.0",
+      "logoDomain": "china-airlines.com"
+    },
+    {
+      "id": "eva-air-cargo",
+      "name": "EVA Air Cargo",
+      "tier": "logistics",
+      "role": "Taiwan's second freighter operator — Boeing 777F lift for chips and AI server hardware on Taipei-North America routes",
+      "description": "EVA Air Cargo flies a Boeing 777F fleet out of Taipei Taoyuan to Los Angeles, Chicago, Dallas, Atlanta, New York and Anchorage, plus intra-Asia routes across Greater China and Southeast Asia. The company has said AI servers now account for 40–50% of its cargo on Taiwan-to-US routes, and its June 2025 cargo revenue of NT$6.65bn was also a three-year high. Together with China Airlines it means the physical output of Taiwan's fabs and packaging lines reaches customers on two airlines' freighter schedules — a concentration that mirrors the concentration in the fabs themselves.",
+      "bottleneck": false,
+      "hq": { "city": "Luzhu, Taoyuan", "country": "Taiwan", "lat": 25.06, "lng": 121.3 },
+      "facilities": [
+        { "name": "Taoyuan freighter base (TPE)", "city": "Taoyuan", "country": "Taiwan", "lat": 25.08, "lng": 121.23, "note": "777F fleet base and export gateway" },
+        { "name": "Anchorage stop (ANC)", "city": "Anchorage", "country": "United States", "lat": 61.17, "lng": -149.99, "note": "Transpacific freighter stop" },
+        { "name": "Los Angeles gateway (LAX)", "city": "Los Angeles", "country": "United States", "lat": 33.94, "lng": -118.41, "note": "Primary US freighter destination" }
+      ],
+      "suppliesTo": [
+        { "target": "nvidia", "what": "airfreight of AI server racks and GPU modules on Taipei-US freighter routes" },
+        { "target": "amd", "what": "airfreight of finished packaged silicon from Taiwan to North America" }
+      ],
+      "website": "https://www.evaair.com/",
+      "productUrl": "https://www.brcargo.com/",
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/EVA_Air_Cargo_Boeing_777F_B-16781_departing_Taoyuan_February_2026.jpg/1280px-EVA_Air_Cargo_Boeing_777F_B-16781_departing_Taoyuan_February_2026.jpg",
+      "imageCredit": "4300streetcar / Wikimedia Commons, CC BY 4.0",
+      "logoDomain": "evaair.com"
+    }
+  ]
+}

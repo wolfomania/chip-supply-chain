@@ -1,0 +1,73 @@
+/* Companies view — card grid. */
+
+.company-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 14px;
+}
+
+.company-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--card-color, var(--accent));
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-soft);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.company-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--card-color, var(--accent));
+}
+.company-card.selected {
+  box-shadow: 0 0 0 2px var(--card-color, var(--accent)), var(--shadow-soft);
+}
+
+.company-card .card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  /* The tier tag never shrinks (nowrap) and the name can't go below its
+     longest word, so without wrapping the row spills out of the card and
+     the tag is painted over by the next column. Let it drop to its own line. */
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+.company-card .card-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+.company-card .tier-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--card-dark, var(--ink-soft));
+  background: var(--card-soft, var(--bg-sunken));
+  border-radius: 999px;
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+.company-card .role {
+  color: var(--ink-soft);
+  font-size: 0.84rem;
+  flex: 1;
+}
+.company-card .card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+.badge-choke {
+  color: var(--card-dark, var(--accent-ink));
+  font-weight: 600;
+}
